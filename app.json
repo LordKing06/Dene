@@ -1,16 +1,16 @@
 {
   "name": "New Mention Bot",
   "description": "Python ile yapılan basit bir üye etiketleme botu [Telethon].",
-  "logo": "https://i.ibb.co/Qkz78hx/images-1.jpg",
+  "logo": "https://telegra.ph/file/d48be081544fa50786a6a.jpg",
   "keywords": [
     "telegram",
     "MentionBot",
     "plugins",
     "telegram-Mention",
   ],
-  "repository": "https://github.com/Mahoaga06/Tag-members",
-  "website": "https://github.com/Mahoaga06/Tag-members", 
-  "success_url": "t.me/TaliaSupport",
+  "repository": "https://github.com/Suphiozturk8/Casper-Tagger",
+  "website": "https://github.com/Suphiozturk8/Casper-Tagger", 
+  "success_url": "t.me/BioCasper",
   "env": {
     "ENV": {
       "description": "Bunu HERHANGİ BİR ŞEY, olarak ayarlamak heroku'yu etkinleştirir.",
