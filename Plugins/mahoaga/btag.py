@@ -3,7 +3,7 @@ from Plugins import Maho
 from telethon import events, Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
-from Configs import *
+from Config import *
 from asyncio import sleep
 import time, random 
 
