@@ -7,4 +7,4 @@ RUN pip3 install -U pip
 COPY requirements.txt .
 RUN pip3 install -U -r requirements.txt
 
-CMD bash start
+CMD python3 -m Plugins 
