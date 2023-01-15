@@ -16,7 +16,7 @@ async def start(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/CasperTagger_Bot?startgroup=a'),
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
                        Button.url('📣 Kanal', 'https://t.me/BioCasper')
                       ],
                       [
@@ -32,7 +32,7 @@ async def start(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/CasperTagger_Bot?startgroup=a'),
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
                        Button.url('📣 Kanal', 'https://t.me/BioCasper')
                       ],
                       [
@@ -51,7 +51,7 @@ async def handler(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/CasperTagger_Bot?startgroup=a'),
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
                        Button.url('📣 Kanal', 'https://t.me/BioCasper')
                       ],
                       [
