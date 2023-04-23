@@ -5,7 +5,7 @@ from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events, Button
 from asyncio import sleep
-from Config import *
+from Config import Config 
 import datetime
 import motor.motor_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
@@ -39,6 +39,10 @@ LOGGER = logging.getLogger(__name__)
 #-#-#-# Pyrogram Başlanğıc #-#-#-#
 app = Client(":memory:", api_id, api_hash, bot_token=bot_token)
 
+
+api_id = Config.APP_ID
+api_hash = Config.API_HASH
+bot_token = Config.BOT_TOKEN
 
 
 # Qruplara yayım mesajı
