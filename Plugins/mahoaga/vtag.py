@@ -27,7 +27,7 @@ async def cancel_spam(event):
 
 
 
-
+Maho.on(events.NewMessage(pattern="^/vtag$"))
 def rtag(event):
   global gece_tag
   rxyzdev_tagTot[event.chat_id] = 0
