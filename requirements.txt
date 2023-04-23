@@ -1,3 +1,9 @@
 telethon
 cryptg
 requests
+Pyrogram==1.4.9
+tgcrypto
+pymongo[srv]
+aiofiles
+psutil
+motor
