@@ -16,8 +16,8 @@ for name in files:
         load_mahoaga(plugin_name.replace(".py", ""))
     
 print("Bot başarıyla başlatıldı!")
-print("Kanal ziyareti @BioCasper 👻")
+print("Kanal ziyareti @TaliaSupport 🥳")
 
 if __name__ == "__main__":
     Maho.run_until_disconnected()
-    app.start()
+    app.run()
