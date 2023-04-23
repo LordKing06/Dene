@@ -15,6 +15,7 @@ import shutil, psutil, traceback, os
 import random
 import string
 import time
+from Plugins import app
 import traceback
 import aiofiles
 from pyrogram import Client, filters, __version__
@@ -33,12 +34,6 @@ logging.basicConfig(
     format='%(name)s - [%(levelname)s] - %(message)s'
 )
 LOGGER = logging.getLogger(__name__)
-
-
-
-#-#-#-# Pyrogram Başlanğıc #-#-#-#
-app = Client(":memory:", API_ID, APİ_HASH, TOKEN)
-
 
 
 
@@ -468,5 +463,3 @@ class LAN(object):
         USER_UNBAN_NOTIFY = "🎊 Sizə gözəl bir xəbərim var! Artıq əngəliniz qaldırıldı!"
         BLOCKS = "🆔 **İstifadəçi ID**: `{}`\n⏱ **Vaxt**: `{}`\n🗓 **Qadağan edildiyi tarix**: `{}`\n💬 **Səbəb**: `{}`\n\n"
         TOTAL_BLOCK = "🚷 **Ümumi əngəllənən:** `{}`\n\n{}"
-
-app.start()
