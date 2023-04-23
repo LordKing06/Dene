@@ -6,6 +6,8 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events, Button
 from asyncio import sleep
 from Config import Config 
+
+
 import datetime
 import motor.motor_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
@@ -34,11 +36,20 @@ logging.basicConfig(
 )
 LOGGER = logging.getLogger(__name__)
 
-# pyrogram 
-app = Client("Tags", Config.APP_ID, Config.API_HASH, Config.TOKEN)
+api_id = Config.API_ID
+api_hash = Config.API_HASH
+bot_token = Config.BOT_TOKEN
 
 
-# Gruplara yayım mesajı
+
+
+
+#-#-#-# Pyrogram Başlanğıc #-#-#-#
+app = Client(":memory:", api_id, api_hash, bot_token=bot_token)
+
+
+
+# Qruplara yayım mesajı
 
 ############## DEĞİŞKENLER ##############
 #mongodb+srv://guneltagbot:Edalet2020@cluster0.isllg4n.mongodb.net/?retryWrites=true&w=majority
@@ -464,7 +475,8 @@ class LAN(object):
         USER_UNBAN_NOTIFY = "🎊 Sizə gözəl bir xəbərim var! Artıq əngəliniz qaldırıldı!"
         BLOCKS = "🆔 **İstifadəçi ID**: `{}`\n⏱ **Vaxt**: `{}`\n🗓 **Qadağan edildiyi tarix**: `{}`\n💬 **Səbəb**: `{}`\n\n"
         TOTAL_BLOCK = "🚷 **Ümumi əngəllənən:** `{}`\n\n{}"
-
+	
+  
 
 
 app.start()
