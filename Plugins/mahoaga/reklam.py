@@ -5,7 +5,7 @@ from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events, Button
 from asyncio import sleep
-from Config import Config 
+from Config import * 
 import datetime
 import motor.motor_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
@@ -40,12 +40,9 @@ LOGGER = logging.getLogger(__name__)
 app = Client(":memory:", API_ID, APİ_HASH, TOKEN)
 
 
-api_id = Config.APP_ID
-api_hash = Config.API_HASH
-bot_token = Config.TOKEN
 
 
-# Qruplara yayım mesajı
+# Gruplara yayım mesajı
 
 ############## DEĞİŞKENLER ##############
 #mongodb+srv://guneltagbot:Edalet2020@cluster0.isllg4n.mongodb.net/?retryWrites=true&w=majority
