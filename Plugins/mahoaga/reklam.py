@@ -15,7 +15,7 @@ import shutil, psutil, traceback, os
 import random
 import string
 import time
-from Plugins import app
+from Plugins import Maho
 import traceback
 import aiofiles
 from pyrogram import Client, filters, __version__
@@ -258,7 +258,7 @@ async def delcmd_off(chat_id: int): # Grup için mesaj silme özeliğini kapatı
 ################# SAHİP KOMUTLARI #############
 
 # Verileri listeleme komutu
-@app.on_message(filters.command("stats") & filters.user(OWNER_ID))
+@Maho.on_message(filters.command("stats") & filters.user(OWNER_ID))
 async def botstats(bot: Client, message: Message):
     g4rip = await bot.send_message(message.chat.id, LAN.STATS_STARTED.format(message.from_user.mention))
     all_users = await db.get_all_users()
@@ -282,21 +282,21 @@ async def botstats(bot: Client, message: Message):
 
 
 # Botu ilk başlatan kullanıcıların kontrolünü sağlar.
-@app.on_message()
+@Maho.on_message()
 async def G4RIP(bot: Client, cmd: Message):
     await handle_user_status(bot, cmd)
 
 
 
 # Broadcast komutu
-@app.on_message(filters.command("reklam") & filters.user(OWNER_ID) & filters.reply)
+@Maho.on_message(filters.command("reklam") & filters.user(OWNER_ID) & filters.reply)
 async def broadcast_handler_open(_, m: Message):
     await main_broadcast_handler(m, db)
 
 
 
 # Bir kullanıcı yasaklama komutu
-@app.on_message(filters.command("block") & filters.user(OWNER_ID))
+@Maho.on_message(filters.command("block") & filters.user(OWNER_ID))
 async def ban(c: Client, m: Message):
     if m.reply_to_message:
         user_id = m.reply_to_message.from_user.id
@@ -342,7 +342,7 @@ async def ban(c: Client, m: Message):
 
 
 # Bir kullanıcın yasağını kaldırmak komutu
-@app.on_message(filters.command("unblock") & filters.user(OWNER_ID))
+@Maho.on_message(filters.command("unblock") & filters.user(OWNER_ID))
 async def unban(c: Client, m: Message):
         if m.reply_to_message:
             user_id = m.reply_to_message.from_user.id
@@ -366,7 +366,7 @@ async def unban(c: Client, m: Message):
 
 
 # Yasaklı listesini görme komutu
-@app.on_message(filters.command("blocklist") & filters.user(OWNER_ID))
+@Maho.on_message(filters.command("blocklist") & filters.user(OWNER_ID))
 async def _banned_usrs(_, m: Message):
     all_banned_users = await db.get_all_banned_users()
     banned_usr_count = 0
