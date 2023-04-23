@@ -16,11 +16,11 @@ async def start(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/BioCasper')
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/denemetagtag_bot?startgroup=a'),
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Suphi_Casper')
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
                       ],
                     ),
                     link_preview=False)
@@ -32,11 +32,11 @@ async def start(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/BioCasper')
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/denemetagtag_bot?startgroup=a'),
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Suphi_Casper')
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
                       ],
                     ),
                     link_preview=False)
@@ -51,11 +51,11 @@ async def handler(event):
                        Button.inline("🗄 Komutlar", data="komutlar")
                       ],
                       [
-                       Button.url('↘️ Gruba Ekle', 'http://t.me/Casper_Tagger_Bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/BioCasper')
+                       Button.url('↘️ Gruba Ekle', 'http://t.me/Denemetagtag_bot?startgroup=a'),
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Suphi_Casper')
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
                       ],
                     ),
                     link_preview=False)
@@ -63,7 +63,7 @@ async def handler(event):
 # Maho aga
 @Maho.on(events.callbackquery.CallbackQuery(data="komutlar"))
 async def handler(event):
-    await event.edit(f"**⌯              𝑲𝒐𝒎𝒖𝒕𝒍𝒂𝒓              ⌯**\n\n**🕹 Komut :** `/tag`\n**📄 Açıklama :** `Toplu etiket atar.`\n\n**🕹 Komut :** `/ttag`\n**📄 Açıklama :** `Tek tek etiketleme işlemi yapar.`\n\n**🕹 Komut :** `/yt`\n**📄 Açıklama :** `Sadece adminleri etiketler.`\n\n**🕹 Komut :** `/btag`\n**📄 Açıklama :** `Bayraklar ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/stag`\n**📄 Açıklama :** `Söz ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/itag`\n**📄 Açıklama :** `İsimler ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/futbol`\n**📄 Açıklama :** `Futbolcu isimleri ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/etag`\n**📄 Açıklama :** `Emojiler ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/cancel`\n**📄 Açıklama :** `Etiketleme işlemini sonlandırır...`\n\n**❗ Yalnızca yöneticiler bu komutları kullanabilir.**", buttons=(
+    await event.edit(f"**⌯              𝑲𝒐𝒎𝒖𝒕𝒍𝒂𝒓              ⌯**\n\n**🕹 Komut :** `/tag`\n**📄 Açıklama :** `Toplu etiket atar.`\n\n**🕹 Komut :** `/ttag`\n**📄 Açıklama :** `Tek tek etiketleme işlemi yapar.`\n\n**🕹 Komut :** `/yt`\n**📄 Açıklama :** `Sadece adminleri etiketler.`\n\n**🕹 Komut :** `/btag`\n**📄 Açıklama :** `Bayraklar ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/stag`\n**📄 Açıklama :** `Söz ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/itag`\n**📄 Açıklama :** `İsimler ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/futbol`\n**📄 Açıklama :** `Futbolcu isimleri ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/etag`\n**📄 Açıklama :** `Emojiler ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/cancel`\n**📄 Açıklama :** `Etiketleme işlemini sonlandırır...`\n\n**❗ Yalnızca yöneticiler bu komutları kullanabilir.**`\n\n****🕹 Komut :** `/vtag`\n**📄 Açıklama :** `Sorularla ile etiketleme işlemini yapar.`\n\n**🕹 Komut :** `/kart`\n**📄 Açıklama :** `İskambil kartları ile etiketleme yapar...`\n\n**", buttons=(
                       [
                       Button.inline("◀️ Geri", data="start")
                       ]
