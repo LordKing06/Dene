@@ -4,7 +4,7 @@ from telethon import events, Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from asyncio import sleep
-from Plugins import soru
+from Plugins import modlar
 from Config import *
 import time, random 
 
