@@ -18,7 +18,7 @@ Maho = bot.start(bot_token=Config.TOKEN)
 # pyrogram 
 app = Client(
     "Tags",
-    Config.API_ID,
+    Config.APP_ID,
     Config.API_HASH,
     bot_token=Config.TOKEN,
 )
