@@ -2,7 +2,7 @@ import glob
 from pathlib import Path
 from Plugins.utils import load_mahoaga
 import logging
-from Plugins import Maho
+from Plugins import Maho, app
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)
@@ -20,3 +20,4 @@ print("Kanal ziyareti @BioCasper 👻")
 
 if __name__ == "__main__":
     Maho.run_until_disconnected()
+    app.start()
