@@ -37,12 +37,12 @@ LOGGER = logging.getLogger(__name__)
 
 
 #-#-#-# Pyrogram Başlanğıc #-#-#-#
-app = Client(":memory:", api_id, api_hash, bot_token=bot_token)
+app = Client(":memory:", API_ID, APİ_HASH, TOKEN)
 
 
 api_id = Config.APP_ID
 api_hash = Config.API_HASH
-bot_token = Config.BOT_TOKEN
+bot_token = Config.TOKEN
 
 
 # Qruplara yayım mesajı
