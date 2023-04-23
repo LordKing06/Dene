@@ -3,16 +3,16 @@ from Plugins import Maho
 from telethon import events, Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
+from asyncio import sleep
+from Plugins import soru
 from Config import *
-from asyncio import sleep 
-import time, random
+import time, random 
 
-# Gerekli silmeyiniz. 
+# Silmeyiniz. 
 anlik_calisan = []
 rxyzdev_tagTot = {}
 rxyzdev_initT = {}
-
-# Sonlandırma komutu
+# ---------------------------- Komutlar ---------------------------
 @Maho.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
   if not event.chat_id in anlik_calisan:
@@ -24,21 +24,19 @@ async def cancel_spam(event):
       pass
     return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-
-
-
-Maho.on(events.NewMessage(pattern="^/vtag$"))
-def rtag(event):
-  global gece_tag
+# -------------------Tagger-------------------------------
+@Maho.on(events.NewMessage(pattern="^/vtag ?(.*)"))
+async def mentionall(event):
+  global anlik_calisan 
   rxyzdev_tagTot[event.chat_id] = 0
   if event.is_private:
-    return await event.respond(f"{nogroup}")
+    return await event.respond("**Bu komutu sadece grup veya kanallarda kullanabilirsiniz.**")
   
   admins = []
-  async for admin in client.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+  async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
     admins.append(admin.id)
   if not event.sender_id in admins:
-    return await event.respond(f"{noadmin}")
+    return await event.respond("**Bu komutu sadece yöneticiler kullanabilir. ✋**")
   
   if event.pattern_match.group(1):
     mode = "text_on_cmd"
@@ -47,36 +45,57 @@ def rtag(event):
     mode = "text_on_reply"
     msg = event.reply_to_msg_id
     if msg == None:
-        return await event.respond("**Eski mesajları göremem.**")
+        return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
   elif event.pattern_match.group(1) and event.reply_to_msg_id:
-    return await event.respond("Etiketleme Mesajı Yazmadın!")
+    return await event.respond("**Bana bir metin verin.**")
   else:
-    ##return await event.respond(f"{nomesaj}")
-    
-    ##if mode == "text_on_cmd":
-    await client.send_message(event.chat_id, "✅ Etiket işlemi başlatıldı...",
-                    buttons=(
-                      [
-                       Button.inline(" ⛔ Durdur ", data="cancel")
-                      ]
-                    )
-                  ) 
-    gece_tag.append(event.chat_id)
+    return await event.respond("**Etikete Başlamak için sebep yazın.\n\n(Örnek:** `/tag Herkese Merhaba!`**)**")
+  
+  if mode == "text_on_cmd":
+    anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
-    async for usr in client.iter_participants(event.chat_id):
+    await event.respond("**✅ Etiket işlemi başladı.**")
+        
+    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
       rxyzdev_tagTot[event.chat_id] += 1
       usrnum += 1
-      usrtxt += f"[{random.choice(soru)}](tg://user?id={usr.id}) "
-      if event.chat_id not in gece_tag:
+      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id})(tg://user?id={usr.id})\n"
+      if event.chat_id not in anlik_calisan:
         return
-      if usrnum == 1:
-        await client.send_message(event.chat_id, f"{usrtxt}")
-        await asyncio.sleep(20)
+      if usrnum == 5:
+        await Maho.send_message(event.chat_id, f"**⌯ 📢 {msg}**\n\n{usrtxt}")
+        await asyncio.sleep(3)
         usrnum = 0
         usrtxt = ""
-
+        
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
-    if event.chat_id in rxyzdev_tagTot:await event.respond(f"✅ Etiket işlemi tamamlandı !\n\n📊 Toplam etiket: {rxyzdev_tagTot[event.chat_id]}\n👤Etiket işlemini başlatan: {rxyzdev_initT}")
+    if event.chat_id in rxyzdev_tagTot:
+           a = await event.respond(f"**✅ Etiket işlemi başarıyla durduruldu.**\n\n**Etiketlenen Kişi Sayısı:** {rxyzdev_tagTot[event.chat_id]}")
+           await sleep(10)
+           await a.delete()
 
+  if mode == "text_on_reply":
+    anlik_calisan.append(event.chat_id)
+ 
+    usrnum = 0
+    usrtxt = ""
+    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
+      rxyzdev_tagTot[event.chat_id] += 1
+      usrnum += 1
+      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id})tg://user?id={usr.id})\n"
+      if event.chat_id not in anlik_calisan:
+        return
+      if usrnum == 5:
+        await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
+        await asyncio.sleep(3)
+        usrnum = 0
+        usrtxt = ""
+     
+    sender = await event.get_sender()
+    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
+    if event.chat_id in rxyzdev_tagTot:
+           a = await event.respond(f"**✅ Etiket işlemi başarıyla durduruldu.**\n\n**Etiketlenen Kişi Sayısı:** {rxyzdev_tagTot[event.chat_id]}")
+           await sleep(10)
+           await a.delete()
