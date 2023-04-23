@@ -7,3 +7,11 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 bot = TelegramClient('Maho', api_id=Config.APP_ID, api_hash=Config.API_HASH)
 Maho = bot.start(bot_token=Config.TOKEN)
+
+# pyrogram 
+app = Client(
+    "Tags",
+    config.API_ID,
+    config.API_HASH,
+    bot_token=config.TOKEN,
+)
