@@ -1,4 +1,34 @@
- def rtag(event):
+import os, logging, asyncio
+from Plugins import Maho
+from telethon import events, Button
+from telethon.sessions import StringSession
+from telethon.tl.types import ChannelParticipantsAdmins
+from Config import *
+from asyncio import sleep 
+import time, random
+
+# Gerekli silmeyiniz. 
+anlik_calisan = []
+rxyzdev_tagTot = {}
+rxyzdev_initT = {}
+
+# Sonlandırma komutu
+@Maho.on(events.NewMessage(pattern="^/cancel$"))
+async def cancel_spam(event):
+  if not event.chat_id in anlik_calisan:
+    return
+  else:
+    try:
+      anlik_calisan.remove(event.chat_id)
+    except:
+      pass
+    return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+
+
+
+
+
+def rtag(event):
   global gece_tag
   rxyzdev_tagTot[event.chat_id] = 0
   if event.is_private:
