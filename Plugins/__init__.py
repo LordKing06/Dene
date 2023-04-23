@@ -1,6 +1,13 @@
 from telethon import TelegramClient
+from pyrogram import Client
 import logging
 from Config import *
+import asyncio
+import logging
+import os
+import time 
+
+
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)
