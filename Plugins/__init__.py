@@ -1,5 +1,4 @@
 from telethon import TelegramClient
-from pyrogram import Client
 import logging
 from Config import *
 import asyncio
@@ -14,7 +13,3 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 bot = TelegramClient('Maho', api_id=Config.APP_ID, api_hash=Config.API_HASH)
 Maho = bot.start(bot_token=Config.TOKEN)
-
-# pyrogram 
-bot = Client("Tagers", Config.APP_ID, Config.API_HASH)
-app = bot.start(bot_token=Config.TOKEN)
