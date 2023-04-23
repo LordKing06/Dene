@@ -17,10 +17,10 @@ async def start(event):
                       ],
                       [
                        Button.url('↘️ Gruba Ekle', 'http://t.me/denemetagtag_bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport')
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga')
                       ],
                     ),
                     link_preview=False)
@@ -33,10 +33,10 @@ async def start(event):
                       ],
                       [
                        Button.url('↘️ Gruba Ekle', 'http://t.me/denemetagtag_bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport')
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga')
                       ],
                     ),
                     link_preview=False)
@@ -52,10 +52,10 @@ async def handler(event):
                       ],
                       [
                        Button.url('↘️ Gruba Ekle', 'http://t.me/Denemetagtag_bot?startgroup=a'),
-                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport)
+                       Button.url('📣 Kanal', 'https://t.me/TaliaSupport')
                       ],
                       [
-                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga)
+                       Button.url('👻 Sahibim', 'https://t.me/Mahoaga')
                       ],
                     ),
                     link_preview=False)
