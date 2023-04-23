@@ -16,7 +16,7 @@ bot = TelegramClient('Maho', api_id=Config.APP_ID, api_hash=Config.API_HASH)
 Maho = bot.start(bot_token=Config.TOKEN)
 
 # pyrogram 
-app = Client(
+Maho = Client(
     "Tags",
     Config.APP_ID,
     Config.API_HASH,
