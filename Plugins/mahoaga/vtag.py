@@ -3,15 +3,15 @@ from Plugins import Maho
 from telethon import events, Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
-from asyncio import sleep
 from Config import *
+from asyncio import sleep
 import time, random 
 
 # Silmeyiniz. 
 anlik_calisan = []
 rxyzdev_tagTot = {}
 rxyzdev_initT = {}
-# ---------------------------- Komutlar ---------------------------
+
 @Maho.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
   if not event.chat_id in anlik_calisan:
@@ -23,10 +23,9 @@ async def cancel_spam(event):
       pass
     return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-# -------------------Tagger-------------------------------
+# Emoji tag komutu. 
 @Maho.on(events.NewMessage(pattern="^/vtag ?(.*)"))
 async def mentionall(event):
-  global anlik_calisan 
   rxyzdev_tagTot[event.chat_id] = 0
   if event.is_private:
     return await event.respond("**Bu komutu sadece grup veya kanallarda kullanabilirsiniz.**")
@@ -35,7 +34,7 @@ async def mentionall(event):
   async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
     admins.append(admin.id)
   if not event.sender_id in admins:
-    return await event.respond("**Bu komutu sadece yöneticiler kullanabilir. ✋**")
+    return await event.respond("**Bu komutu sadece yöneticiler kullanabilir.**")
   
   if event.pattern_match.group(1):
     mode = "text_on_cmd"
@@ -48,7 +47,7 @@ async def mentionall(event):
   elif event.pattern_match.group(1) and event.reply_to_msg_id:
     return await event.respond("**Bana bir metin verin.**")
   else:
-    return await event.respond("**Etikete Başlamak için sebep yazın.\n\n(Örnek:** `/tag Herkese Merhaba!`**)**")
+    return await event.respond("**Etikete Başlamak için sebep yazın... ✋\n\n(Örnek: `/vtag Herkese Merhaba!`**)**")
   
   if mode == "text_on_cmd":
     anlik_calisan.append(event.chat_id)
@@ -56,10 +55,10 @@ async def mentionall(event):
     usrtxt = ""
     await event.respond("**✅ Etiket işlemi başladı.**")
         
-    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
+    async for x in Maho.iter_participants(event.chat_id, aggressive=False):
       rxyzdev_tagTot[event.chat_id] += 1
       usrnum += 1
-      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id})(tg://user?id={usr.id})\n"
+      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={x.id})\n"
       if event.chat_id not in anlik_calisan:
         return
       if usrnum == 5:
@@ -69,7 +68,7 @@ async def mentionall(event):
         usrtxt = ""
         
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
+    rxyzdev_initT = f"{sender.first_name}"      
     if event.chat_id in rxyzdev_tagTot:
            a = await event.respond(f"**✅ Etiket işlemi başarıyla durduruldu.**\n\n**Etiketlenen Kişi Sayısı:** {rxyzdev_tagTot[event.chat_id]}")
            await sleep(10)
@@ -80,10 +79,10 @@ async def mentionall(event):
  
     usrnum = 0
     usrtxt = ""
-    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
+    async for x in Maho.iter_participants(event.chat_id, aggressive=False):
       rxyzdev_tagTot[event.chat_id] += 1
       usrnum += 1
-      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id})tg://user?id={usr.id})\n"
+      usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={x.id})\n"
       if event.chat_id not in anlik_calisan:
         return
       if usrnum == 5:
@@ -93,11 +92,12 @@ async def mentionall(event):
         usrtxt = ""
      
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
+    rxyzdev_initT = f"{sender.first_name}"      
     if event.chat_id in rxyzdev_tagTot:
            a = await event.respond(f"**✅ Etiket işlemi başarıyla durduruldu.**\n\n**Etiketlenen Kişi Sayısı:** {rxyzdev_tagTot[event.chat_id]}")
            await sleep(10)
            await a.delete()
+
 
 
 # SORU ile etiketleme modülü
