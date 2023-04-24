@@ -55,7 +55,7 @@ app = Client(":memory:", api_id, api_hash, bot_token=bot_token)
 #mongodb+srv://guneltagbot:Edalet2020@cluster0.isllg4n.mongodb.net/?retryWrites=true&w=majority
 #"mongodb+srv://EdaletRoBot:EdaletRoBot31@cluster0.t4ukpl3.mongodb.net/?retryWrites=true&w=majority"
 DATABASE_URL = "mongodb+srv://lok:lok31@cluster0.lgjlurr.mongodb.net/?retryWrites=true&w=majority"
-BOT_USERNAME = "denemetagtag_bot"
+BOT_USERNAME = "TestTagger_bot"
 LOG_CHANNEL = -1001872661953
 GROUP_SUPPORT = "TaliaSupport"
 GONDERME_TURU = False
