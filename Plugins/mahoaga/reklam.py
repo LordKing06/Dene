@@ -476,7 +476,31 @@ class LAN(object):
         BLOCKS = "🆔 **İstifadəçi ID**: `{}`\n⏱ **Vaxt**: `{}`\n🗓 **Qadağan edildiyi tarix**: `{}`\n💬 **Səbəb**: `{}`\n\n"
         TOTAL_BLOCK = "🚷 **Ümumi əngəllənən:** `{}`\n\n{}"
 	
-  
+ 
+
+# Erosss Denemesi
+
+@app.on_message(filters.command(["eros", f"eros@TestTagger_bot"],[".","/"]) & ~filters.private & ~filters.channel)
+async def ship(c:Client, m:Message):
+    users = await c.get_chat_members(m.chat.id, limit=200)
+    
+    users_l = []
+    for user in users:
+        if user.user.is_bot or user.user.is_deleted:
+            pass
+        else:
+            users_l.append(user.user)
+    count = len(users_l)
+    
+    ilk = users_l[randint(0,count)]
+    iki = users_l[randint(0,count)]
+    
+    if ilk.id==1550788256 or ilk.id==5576614947 or iki.id==5375589992 or iki.id==5576614947:
+        await m.reply(f"<b>Eros'un oku atıldı.🏹\nAşıklar  :\n\nX 💞 X")
+        
+    else:
+        await m.reply(f"<b>Eros'un oku atıldı.🏹\nAşıklar  :\n\n{ilk.mention} 💘 {iki.mention}</b>")
+ 
 
 
 app.start()
