@@ -4,14 +4,7 @@ class Config(object):
     API_ID = int(os.environ.get("API_ID", "28496124"))
     API_HASH = os.environ.get("API_HASH", "dcadf01f9a76befff2eccc932c6eabd1")
     BOT_TOKEN = os.environ.get("BOT_TOKEN",)
-    
-    
-############## DEĞİŞKENLER ##############
-DATABASE_URL = "mongodb+srv://lok:lok31@cluster0.lgjlurr.mongodb.net/?retryWrites=true&w=majority"
-LOG_CHANNEL = -1001930738807
-GONDERME_TURU = False
-OWNER_ID = [1957316197]
-LANGAUGE = "TR"
+
 
 # test projesi..
 BOT_USERNAME = "TestTagger_bot"
