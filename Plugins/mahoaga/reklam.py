@@ -478,29 +478,30 @@ class LAN(object):
 	
  
 
-# Erosss Denemesi
+# Yeni katılan üyeyi karşılamak için kullanılacak fonksiyon
 
-@app.on_message(filters.command(["eros", f"eros@TestTagger_bot"],[".","/"]) & ~filters.private & ~filters.channel)
-async def ship(c:Client, m:Message):
-    users = await c.get_chat_members(m.chat.id, limit=200)
-    
-    users_l = []
-    for user in users:
-        if user.user.is_bot or user.user.is_deleted:
-            pass
-        else:
-            users_l.append(user.user)
-    count = len(users_l)
-    
-    ilk = users_l[randint(0,count)]
-    iki = users_l[randint(0,count)]
-    
-    if ilk.id==1550788256 or ilk.id==5576614947 or iki.id==5375589992 or iki.id==5576614947:
-        await m.reply(f"<b>Eros'un oku atıldı.🏹\nAşıklar  :\n\nX 💞 X")
-        
-    else:
-        await m.reply(f"<b>Eros'un oku atıldı.🏹\nAşıklar  :\n\n{ilk.mention} 💘 {iki.mention}</b>")
- 
+def welcome_user(client, message: Message):
+    # Yeni üye adını alın
+    new_member_name = message.new_chat_members[0].first_name
+    # Hoşgeldin mesajı oluşturun
+    welcome_message = f"Merhaba {new_member_name}, aramıza hoş geldin!"
+    # Mesajı gruba gönderin
+    client.send_message(message.chat.id, welcome_message)
 
+# Ayrılan üyeye veda etmek için kullanılacak fonksiyon
+def bye_user(client, message: Message):
+    # Ayrılan üye adını alın
+    left_member_name = message.left_chat_member.first_name
+    # Güle güle mesajı oluşturun
+    bye_message = f"{left_member_name} ayrıldı, gene bekleriz :)"
+    # Mesajı gruba gönderin
+    client.send_message(message.chat.id, bye_message)
 
+with app:
+    # Yeni katılan üyeleri karşılayın
+    app.add_handler(MessageHandler(welcome_user, filters=Filters.new_chat_members))
+    # Ayrılan üyeleri uğurlayın
+    app.add_handler(MessageHandler(bye_user, filters=Filters.left_chat_member))
+   
+   
 app.start()
