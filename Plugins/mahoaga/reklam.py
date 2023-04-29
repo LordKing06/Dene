@@ -45,8 +45,12 @@ bot_token = Config.BOT_TOKEN
 
 
 #-#-#-# Pyrogram Başlanğıc #-#-#-#
-app = Client(":memory:", api_id, api_hash, bot_token=bot_token)
-
+app = Client(
+	"Tagger Bot",
+	api_id=API_ID,
+	api_hash=API_HASH,
+	bot_token=BOT_TOKEN
+	)
 
 
 # Qruplara yayım mesajı
@@ -507,5 +511,6 @@ async def goodbye(client, message):
     with open("renqumen.txt", "a") as f:
 
         f.write(f"{text}\n")
+
 
 app.start()
