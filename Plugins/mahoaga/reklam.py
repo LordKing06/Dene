@@ -53,21 +53,6 @@ app = Client(
 	)
 
 
-# Qruplara yayım mesajı
-
-############## DEĞİŞKENLER ##############
-#mongodb+srv://guneltagbot:Edalet2020@cluster0.isllg4n.mongodb.net/?retryWrites=true&w=majority
-#"mongodb+srv://EdaletRoBot:EdaletRoBot31@cluster0.t4ukpl3.mongodb.net/?retryWrites=true&w=majority"
-DATABASE_URL = "mongodb+srv://lok:lok31@cluster0.lgjlurr.mongodb.net/?retryWrites=true&w=majority"
-BOT_USERNAME = "TestTagger_bot"
-LOG_CHANNEL = -1001930738807
-GROUP_SUPPORT = "TaliaSupport"
-GONDERME_TURU = False
-OWNER_ID = [1957316197]
-LANGAUGE = "TR"
-
-
-	
 #-------------------------------------------------------------VERİTABANI VERİ GİRİŞ ÇIKIŞI---------------------------------------------------------------------------------------#
  
 class Database: 
