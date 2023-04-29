@@ -1,4 +1,4 @@
-# Zorunlu gereklidir. Eklemek istediğin bilgileri burda belirt çekinme 😏
+# Değişiklikleri ekle belirtilen yerlere ...
 import os
 class Config(object):
     API_ID = int(os.environ.get("API_ID", "28496124"))
@@ -7,8 +7,7 @@ class Config(object):
 
 
 # test projesi..
-BOT_USERNAME = "TestTagger_bot"
-GROUP_SUPPORT = "TaliaSupport"
+BOT_NAME = 'TestTagger_bot'
 sahib = 'Mahoaga' 
 kanal = 'TaliaSupport'
 startmesaj = "**\n\n➣ Grubundaki tüm üyeleri etiketleyebilirim...\n\n➣ Komutlar butonuna tıklayarak tüm komutları öğrenebilirsin.**" 
