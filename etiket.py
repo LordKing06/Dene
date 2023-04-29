@@ -1,4 +1,3 @@
-```python
 from telethon import TelegramClient, events, types
 from telethon.sessions import StringSession
 from asyncio import sleep
@@ -84,6 +83,4 @@ async def durdur_handler(event):
 # istemciyi çalıştırın
 client.start()
 client.run_until_disconnected()
-```
 
-Yukarıdaki kodda, `events.ChatAction()` handler aracılığıyla silinen hesapları ve botları görmez. `etiket` komutunu kullanarak etiketleme işlemi yapar ve `durdur` komutu kullanarak işlemi durdurabilirsiniz. Ayrıca, `etiket` komutu çağrılırken, toplam üye sayısını alır ve mesaj olarak belirtir.
