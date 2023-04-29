@@ -508,4 +508,4 @@ async def goodbye(client, message):
 
         f.write(f"{text}\n")
 
-app.run()
+app.start()
