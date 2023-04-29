@@ -10,7 +10,7 @@ async def start(event):
      ad = f"**➣ 𝖬𝖾𝗋𝗁𝖺𝖻𝖺 [{usr.first_name}](tg://user?id={usr.id}) benim adım Etiket botu merhaba...**"
   await event.reply(f"{ad} {startmesaj}", buttons=(
                       [
-                       Button.url('➕ Beni0 Gruba Ekle', f'https://t.me/{BOT_USERNAME}?startgroup=a')
+                       Button.url('➕ Beni Gruba Ekle', f'https://t.me/{BOT_USERNAME}?startgroup=a')
                       ],
                       [
                        Button.inline("📚 Komutlar", data="komutlar"),
