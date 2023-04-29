@@ -17,7 +17,7 @@ async def start(event):
                        Button.url('👨‍💻 Sahip', f'https://t.me/{sahib}')
                       ],
                       [
-                      Button.url('🛡 Kanal ', f'https://t.me/BotDuyuru')
+                      Button.url('🛡 Kanal ', f'https://t.me/{kanal}')
                       ]
                     ),
                     link_preview=False)
@@ -41,7 +41,7 @@ async def handler(event):
                        Button.url('👨‍💻 Sahip', f'https://t.me/{sahib}')
                       ],
                       [
-                       Button.url('🛡 Kanal ', f'https://t.me/BotDuyuru')
+                       Button.url('🛡 Kanal ', f'https://t.me/{kanal}')
                       ]
                     ),
                     link_preview=False)
