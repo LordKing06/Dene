@@ -6,8 +6,8 @@ from Config import *
 @Maho.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
   if event.is_private:
-    async for usr in client.iter_participants(event.chat_id):
-     ad = f"**➣ 𝖬𝖾𝗋𝗁𝖺𝖻𝖺 [{usr.first_name}](tg://user?id={usr.id}) benim adım Etiket Pro...**"
+    async for usr in Maho.iter_participants(event.chat_id):
+     ad = f"**➣ 𝖬𝖾𝗋𝗁𝖺𝖻𝖺 [{usr.first_name}](tg://user?id={usr.id}) benim adım Etiket botu merhaba...**"
   await event.reply(f"{ad} {startmesaj}", buttons=(
                       [
                        Button.url('➕ Beni0 Gruba Ekle', f'https://t.me/{BOT_USERNAME}?startgroup=a')
@@ -22,16 +22,16 @@ async def start(event):
                     ),
                     link_preview=False)
   if event.is_group:
-    return await client.send_message(event.chat_id, f"{qrupstart}", buttons=( 
+    return await Maho.send_message(event.chat_id, f"{qrupstart}", buttons=( 
                                                     [
                                                     Button.url('🎉  Tıkla', f'https://t.me/{BOT_USERNAME}?start')
                                                     ]
                                                   ),
                                                   link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="start"))
+@Maho.on(events.callbackquery.CallbackQuery(data="start"))
 async def handler(event):
-    async for usr in client.iter_participants(event.chat_id):
-     ad = f"**➣ 𝖬𝖾𝗋𝗁𝖺𝖻𝖺 [{usr.first_name}](tg://user?id={usr.id}) benim adım Etiket Pro...**"
+    async for usr in Maho.iter_participants(event.chat_id):
+     ad = f"**➣ 𝖬𝖾𝗋𝗁𝖺𝖻𝖺 [{usr.first_name}](tg://user?id={usr.id}) benim adım Etiket botu merhaba...**"
     await event.edit(f"{ad} {startmesaj}", buttons=(
                       [
                        Button.url('➕ Beni Gruba Ekle', f'https://t.me/{BOT_USERNAME}?startgroup=a')
@@ -46,7 +46,7 @@ async def handler(event):
                     ),
                     link_preview=False)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ KOMUTLAR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@client.on(events.callbackquery.CallbackQuery(data="komutlar"))
+@Maho.on(events.callbackquery.CallbackQuery(data="komutlar"))
 async def handler(event):
     await event.edit("**➢ Tüm komutlar aşağıda yer almaktadır:\n\n➢ Hadi herhangi bir komuta tıkla ve ne işe yaradığını öğren.**", buttons=(
                       [
@@ -74,7 +74,7 @@ async def handler(event):
                     link_preview=False)
                                                     
                                                     
-@client.on(events.callbackquery.CallbackQuery(data="tag1"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag1"))
 async def tag1(event):
     await event.edit("**» /utag   < Mesaj >\n   - Üyeleri 5'li etiketler.**", buttons=(
                       [
@@ -90,7 +90,7 @@ async def tag2(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag3"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag3"))
 async def tag3(event):
     await event.edit("**» @admin, /admin\n   - Bildirmek istediğiniz kullanıcının mesajına @admin yazmanız yeterli.**", buttons=(
                       [
@@ -98,7 +98,7 @@ async def tag3(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag4"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag4"))
 async def tag4(event):
     await event.edit("**» /etag   < Mesaj >\n   - Üyeleri emoji ile etiketler.**", buttons=(
                       [
@@ -106,7 +106,7 @@ async def tag4(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag5"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag5"))
 async def tag5(event):
     await event.edit("**» /stag   < Mesaj >\n   - Üyeleri güzel sözlerle etiketler.**", buttons=(
                       [
@@ -114,7 +114,7 @@ async def tag5(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag6"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag6"))
 async def tag6(event):
     await event.edit("**» /vtag < Mesaj >\n   - Üyeleri sorularla etiketler.**", buttons=(
                       [
@@ -122,7 +122,7 @@ async def tag6(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag7"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag7"))
 async def tag7(event):
     await event.edit("**» /ktag < Mesaj >\n   - Üyeleri iskambil kağıtları ile etiketler.**", buttons=(
                       [
@@ -138,7 +138,7 @@ async def tag8(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag9"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag9"))
 async def tag9(event):
     await event.edit("»/eros =>\n   - Grup içerisinde eros oku atar.", buttons=(
                       [
@@ -146,7 +146,7 @@ async def tag9(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag10"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag10"))
 async def tag10(event):
     await event.edit("»/cancel =>\n   - 𝖤𝗍𝗂𝗄𝖾𝗍𝗅𝖾𝗆𝖾 𝗂𝗌𝗅𝖾𝗆𝗂𝗇𝗂 𝖽𝗎𝗋𝖽𝗎𝗋𝗎𝗋 .", buttons=(
                       [
@@ -154,7 +154,7 @@ async def tag10(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="gece"))
+@Maho.on(events.callbackquery.CallbackQuery(data="gece"))
 async def gece(event):
     await event.edit("»ᴜ̈ᴄʀᴇᴛsɪᴢ ɢʀᴜᴘ ᴠᴇʏᴀ ᴋᴀɴᴀʟ ʟɪɴᴋɪ ᴇᴋʟᴇᴍᴇᴋ ɪᴄ̧ɪɴ [gє¢є кυѕ̧υ](tg://openmessage?user_id=5576614947) ᴜʟᴀşıɴıᴢ .", buttons=(
                       [
