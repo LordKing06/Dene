@@ -477,31 +477,35 @@ class LAN(object):
         TOTAL_BLOCK = "🚷 **Ümumi əngəllənən:** `{}`\n\n{}"
 	
  
+# Kullanıcı grup üyesi olduğunda çalışacak fonksiyon
+@app.on_message(filters.group & filters.new_chat_members)
 
-# Yeni katılan üyeyi karşılamak için kullanılacak fonksiyon
+async def welcome(client, message):
 
-def welcome_user(client, message: Message):
-    # Yeni üye adını alın
-    new_member_name = message.new_chat_members[0].first_name
-    # Hoşgeldin mesajı oluşturun
-    welcome_message = f"Merhaba {new_member_name}, aramıza hoş geldin!"
-    # Mesajı gruba gönderin
-    client.send_message(message.chat.id, welcome_message)
+    for member in message.new_chat_members:
 
-# Ayrılan üyeye veda etmek için kullanılacak fonksiyon
-def bye_user(client, message: Message):
-    # Ayrılan üye adını alın
-    left_member_name = message.left_chat_member.first_name
-    # Güle güle mesajı oluşturun
-    bye_message = f"{left_member_name} ayrıldı, gene bekleriz :)"
-    # Mesajı gruba gönderin
-    client.send_message(message.chat.id, bye_message)
+        text = f"Merhaba {member.first_name}, hoş geldin!"
 
-with app:
-    # Yeni katılan üyeleri karşılayın
-    app.add_handler(MessageHandler(welcome_user, filters=Filters.new_chat_members))
-    # Ayrılan üyeleri uğurlayın
-    app.add_handler(MessageHandler(bye_user, filters=Filters.left_chat_member))
-   
-   
-app.start()
+        await message.reply(text)
+
+        with open("renqumen.txt", "a") as f:
+
+            f.write(f"{text}\n")
+
+# Kullanıcı gruptan ayrıldığında çalışacak fonksiyon
+
+@app.on_message(filters.group & filters.left_chat_member)
+
+async def goodbye(client, message):
+
+    member = message.left_chat_member
+
+    text = f"Görüşürüz {member.first_name}!"
+
+    await message.reply(text)
+
+    with open("renqumen.txt", "a") as f:
+
+        f.write(f"{text}\n")
+
+app.run()
