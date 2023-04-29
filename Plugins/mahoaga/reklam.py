@@ -53,6 +53,17 @@ app = Client(
 	)
 
 
+############## DEĞİŞKENLER ##############
+DATABASE_URL = "mongodb+srv://lok:lok31@cluster0.lgjlurr.mongodb.net/?retryWrites=true&w=majority"
+LOG_CHANNEL = -1001930738807
+GONDERME_TURU = False
+OWNER_ID = [1957316197]
+LANGAUGE = "TR"
+BOT_USERNAME = "TestTagger_bot"
+
+
+
+
 #-------------------------------------------------------------VERİTABANI VERİ GİRİŞ ÇIKIŞI---------------------------------------------------------------------------------------#
  
 class Database: 
