@@ -130,7 +130,7 @@ async def tag7(event):
                       ]
                     ),
                     link_preview=False)
-@client.on(events.callbackquery.CallbackQuery(data="tag8"))
+@Maho.on(events.callbackquery.CallbackQuery(data="tag8"))
 async def tag8(event):
     await event.edit("**» /btag < Mesaj >\n   - Üyeleri bayraklar ile etiketler.**", buttons=(
                       [
