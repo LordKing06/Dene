@@ -3,16 +3,7 @@ from telethon import events, Button
 from telethon.tl.types import ChannelParticipantsAdmins
 from Config import *
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ START MESAJI ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.on(events.NewMessage(pattern="^/start$"))
 @Maho.on(events.NewMessage(pattern="^/start$"))
-
-6
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ START MESAJI ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.on(events.NewMessage(pattern="^/start$"))
-
-9
-
-
 async def start(event):
   if event.is_private:
     async for usr in client.iter_participants(event.chat_id):
