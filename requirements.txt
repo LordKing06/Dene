@@ -7,4 +7,4 @@ pymongo[srv]
 aiofiles
 psutil
 motor
-gTTS
+tts
