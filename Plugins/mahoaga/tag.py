@@ -101,5 +101,7 @@ async def mentionall(event):
             usrtxt = ""
      
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
-    if event.chat_id in rxyz
+    if event.chat_id in rxyzdev_tagTot:
+           a = await event.respond(f"**✅ Etiket işlemi başarıyla durduruldu.**\n\n**Etiketlenen Kişi Sayısı:** {rxyzdev_tagTot[event.chat_id]}")
+           await sleep(10)
+           await a.delete()
