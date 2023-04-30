@@ -60,23 +60,16 @@ async def mentionall(event):
       rxyzdev_tagTot[event.chat_id] += 1
     async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
     if usr.deleted or usr.bot:
-
-        continue
-
+         continue 
     rxyzdev_tagTot[event.chat_id] += 1
-
     usrnum += 1
-
     usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
     if event.chat_id not in anlik_calisan:
-
         return
-
     if usrnum == 5:
 
         await Maho.send_message(event.chat_id, f"**⌯ 📢 {msg}**\n\n{usrtxt}")
         await asyncio.sleep(3)
-
         usrnum = 0
         usrtxt = ""
         
