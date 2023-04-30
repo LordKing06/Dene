@@ -4,6 +4,7 @@ import asyncio
 from telethon import Button, events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantsRecent
 from asyncio import sleep
 from Config import *
 from Plugins import Maho
