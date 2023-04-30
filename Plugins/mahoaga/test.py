@@ -26,3 +26,41 @@ async def handle_new_message(event):
 
 client.start()
 client.run_until_disconnected()
+
+
+
+
+
+#Tamam, anladım. Aşağıdaki kodu verdiğiniz kodun sonuna ekleyebilirim. Bu kod, etiketleme işlemi sırasında silinen hesapları ve botları görmezden gelir:
+
+
+
+async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
+
+    if usr.deleted or usr.bot:
+
+        continue
+
+    rxyzdev_tagTot[event.chat_id] += 1
+
+    usrnum += 1
+
+    usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
+
+    if event.chat_id not in anlik_calisan:
+
+        return
+
+    if usrnum == 5:
+
+        await Maho.send_message(event.chat_id, f"**⌯ 📢 {msg}**\n\n{usrtxt}")
+
+        await asyncio.sleep(3)
+
+        usrnum = 0
+
+        usrtxt = ""
+
+``` 
+
+Umarım bu yardımcı olur.
