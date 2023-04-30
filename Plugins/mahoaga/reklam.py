@@ -508,20 +508,26 @@ async def goodbye(client, message):
 
         f.write(f"{text}\n")
 
-# Eros eklemiş bulunuyoruz bu komutu ta. 
-@app.on_message(filters.command('eros', prefixes='/'))
-def ship(_, message: Message):
-    # Mesajdaki kullanıcıları al
-    users = message.entities[1:3]
-
-    # İsimlerini al
-    user1 = users[0].user.full_name
-    user2 = users[1].user.full_name
-
-    # Rastgele bir aşk skoru hesaplayın
-    score = random.randint(0, 100)
-
-    # Yanıt verin
-    message.reply(f'{user1} ve {user2} Aşıklar bulundu, aşk skorları {score}/100! ❤️')
-
-app.start()
+# /ship komutunu algılamak için
+@app.on_message(filters.command("eros"))
+async def ship_command(client, message):
+    # Komutu alınan mesajı " " karakterine göre ayıralım
+    args = message.text.split(" ")[1:]
+    
+    # İki kişinin adını belirtmeden ship komutu kullanılmışsa
+    if len(args) < 2:
+        await message.reply_text("Lütfen iki kişinin adını da belirtin.")
+        return
+    
+    # İsimleri birleştirelim
+    shipname = args[0][0:len(args[0])//2] + args[1][len(args[1])//2:]
+    
+    # İsimleri birleştirilen çiftin adını kaydetmek için bir dosya açalım
+    with open("renqumen.txt", "a") as f:
+        f.write(shipname + "\n")
+    
+    # İsimleri birleştirilmiş çiftin adını yanıt olarak gönderelim
+    await message.reply_text(f"Bu ikilinin adı artık {shipname}!")
+    
+    app.start()
+    
