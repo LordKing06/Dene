@@ -79,11 +79,12 @@ async def mentionall(event):
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
         if event.chat_id in rxyzdev_tagTot:
-            member_count = await event.client.get_participants(event.chat_id)
-            tag_count = rxyzdev_tagTot[event.chat_id]
-            a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
-            await sleep(10)
-            await a.delete()
+           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
+           tag_count = rxyzdev_tagTot[event.chat_id]
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
+           await sleep(10)
+           await a.delete()
 
     if mode == "text_on_reply":
         anlik_calisan.append(event.chat_id)
@@ -107,12 +108,15 @@ async def mentionall(event):
         sender = await event.get_sender()
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
+        
         if event.chat_id in rxyzdev_tagTot:
-            member_count = await event.client.get_participants(event.chat_id)
-            tag_count = rxyzdev_tagTot[event.chat_id]
-            a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
-            await sleep(10)
-            await a.delete()
-            
+           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
+           tag_count = rxyzdev_tagTot[event.chat_id]
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
+           await sleep(10)
+           await a.delete()
+
+#Bu şekilde, `get_participants()` fonksiyonuna `filter` parametresi eklenerek yalnızca insan kullanıcıları alınırken, botları da hesaplayabilirsiniz.
                                     
                                     
