@@ -5,7 +5,8 @@ from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events, Button
 from asyncio import sleep
-from Config import Config 
+from Config import Config
+from gtts import gTTS
 
 
 import datetime
@@ -500,7 +501,7 @@ async def goodbye(client, message):
 
     member = message.left_chat_member
 
-    text = f"Görüşürüz {member.first_name}!"
+    text = f"Görüşürüz. Kendine iyi bak {member.first_name}!"
 
     await message.reply(text)
 
@@ -508,6 +509,27 @@ async def goodbye(client, message):
 
         f.write(f"{text}\n")
 
-#Clienti çalıştır.. 
+
+# "ses" isimli bir klasör oluştur
+if not os.path.exists('ses'):
+    os.makedirs('ses')
+
+# "/ses" komutu
+@app.on_message(filters.command(['ses']))
+def text_to_speech(client, message):
+    # Mesajdaki metni al
+    text = message.text.split('/ses', 1)[1].strip()
+    # Metni konuşma sesine dönüştür
+    tts = gTTS(text, lang='tr')
+    # Oluşturulan ses dosyasını "ses" klasörüne kaydet
+    file_name = f'ses/{message.chat.id}.mp3'
+    tts.save(file_name)
+    # Ses dosyasını Telegram kullanıcısına gönder
+    client.send_audio(message.chat.id, audio=file_name)
+    # Oluşturulan dosyayı sil
+    os.remove(file_name)
+
+
+# Telegram istemcisini başlat
 app.start()
     
