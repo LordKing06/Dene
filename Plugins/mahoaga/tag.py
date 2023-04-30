@@ -55,13 +55,12 @@ async def mentionall(event):
     usrnum = 0
     usrtxt = ""
     await event.respond("**✅ Etiket işlemi başladı.**")
-        
-    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
+
+async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
     rxyzdev_tagTot[event.chat_id] += 1
 
-    async for usr in Maho.iter_participants(event.chat_id, aggressive=False):
-        if usr.deleted or usr.bot:
-            continue 
+    if usr.deleted or usr.bot:
+        continue 
         rxyzdev_tagTot[event.chat_id] += 1
         usrnum += 1
         usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
