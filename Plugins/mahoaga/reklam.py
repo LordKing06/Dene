@@ -529,5 +529,5 @@ async def ship_command(client, message):
     # İsimleri birleştirilmiş çiftin adını yanıt olarak gönderelim
     await message.reply_text(f"Bu ikilinin adı artık {shipname}!")
     
- app.start()
+app.start()
     
