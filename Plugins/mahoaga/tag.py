@@ -4,7 +4,7 @@ import asyncio
 from telethon import Button, events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
-from telethon.tl.types import PeerChannel, ChannelParticipantsRecent
+from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
 
 
 from asyncio import sleep
