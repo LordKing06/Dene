@@ -508,5 +508,20 @@ async def goodbye(client, message):
 
         f.write(f"{text}\n")
 
+# Eros eklemiş bulunuyoruz bu komutu ta. 
+@app.on_message(filters.command('eros', prefixes='/'))
+def ship(_, message: Message):
+    # Mesajdaki kullanıcıları al
+    users = message.entities[1:3]
+
+    # İsimlerini al
+    user1 = users[0].user.full_name
+    user2 = users[1].user.full_name
+
+    # Rastgele bir aşk skoru hesaplayın
+    score = random.randint(0, 100)
+
+    # Yanıt verin
+    message.reply(f'{user1} ve {user2} Aşıklar bulundu, aşk skorları {score}/100! ❤️')
 
 app.start()
