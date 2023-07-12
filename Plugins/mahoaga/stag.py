@@ -290,7 +290,7 @@ async def mentionall(event):
            bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
            a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-eé           await sleep(10)
+           await sleep(10)
            await a.delete()
 
 # Aşağıdaki gibidir. 
