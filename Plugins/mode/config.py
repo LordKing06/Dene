@@ -1,4 +1,4 @@
-# Telefon config gereksinimleri.
+# Telethon kütüphanesi config gereksinimleri.
 
 from telethon import TelegramClient
 
