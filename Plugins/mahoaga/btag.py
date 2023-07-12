@@ -28,7 +28,7 @@ async def cancel_spam(event):
             pass
         return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-@Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/btag ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
     rxyzdev_tagTot[event.chat_id] = 0
@@ -73,7 +73,7 @@ async def mentionall(event):
 
             if usrnum == 5:
                 await Maho.send_message(event.chat_id, f"⌯ 📢 {msg}\n\n{usrtxt}")
-                await asyncio.sleep(3)
+                await asyncio.sleep(8)
                 usrnum = 0
                 usrtxt = ""
 
