@@ -2,7 +2,7 @@ from telethon import TelegramClient, events
 from gtts import gTTS
 from Plugins import Maho 
 import os
-from mode.config import Maho
+from Plugins.mode.config import Maho
 
 @Maho.on(events.NewMessage(pattern='^!seslendir (.*)'))
 async def handle(event):
