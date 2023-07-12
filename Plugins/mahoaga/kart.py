@@ -1,5 +1,3 @@
-# Emojiler ile sade ve şık etiketleme işlemi 🤫
-
 import os
 import logging
 import asyncio
