@@ -66,7 +66,7 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(sozler)}](tg://user?id={x.id})\n"
+            usrtxt += f[{random.choice(sozler)}](tg://user?id={x.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
