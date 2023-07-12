@@ -1,9 +1,8 @@
 import os, logging, asyncio
-from Plugins import Maho
 from telethon import events, Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
-from Config import *
+from Plugings.mode.config import Maho
 from asyncio import sleep
 import time, random 
 
