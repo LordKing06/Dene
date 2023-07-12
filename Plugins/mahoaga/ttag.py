@@ -28,7 +28,7 @@ async def cancel_spam(event):
             pass
         return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-@Maho.on(events.NewMessage(pattern="^/etiket ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/tetag ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
     rxyzdev_tagTot[event.chat_id] = 0
