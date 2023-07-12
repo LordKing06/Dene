@@ -4,7 +4,7 @@ import random
 from telethon import events
 from Plugins.mode.config import Maho
 
-@edalet.on(events.NewMessage(pattern="^/id ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/id ?(.*)"))
 async def id(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
