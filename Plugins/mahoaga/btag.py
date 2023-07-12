@@ -39,7 +39,7 @@ async def mentionall(event):
     async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
-        return await event.respond("**Bu komutu sadece yöneticiler kullanabilir. ✋**")
+        return await event.respond(f"{noadmin}")
   
     if event.pattern_match.group(1):
         mode = "text_on_cmd"
@@ -50,7 +50,7 @@ async def mentionall(event):
         if msg == None:
             return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
     else:
-        return await event.respond("**Etikete başlamak için sebep yazın.\n\n(Örnek:** `/tag Herkese Merhaba!`**)**")
+        return await event.respond(f"{nogroup}")
   
     group_participants = await Maho.get_participants(event.chat_id)
 
@@ -66,7 +66,7 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={x.id})\n"
+            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={usr.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
@@ -96,7 +96,7 @@ async def mentionall(event):
 
         for usr in group_participants:
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={x.id})\n"
+            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={usr.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
