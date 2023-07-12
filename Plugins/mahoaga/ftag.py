@@ -52,7 +52,7 @@ async def mentionall(event):
         if msg == None:
             return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
     else:
-        return await event.respond(f"{nogroup}")
+        return await event.respond(f"{nomesaj")
   
     group_participants = await Maho.get_participants(event.chat_id)
 
