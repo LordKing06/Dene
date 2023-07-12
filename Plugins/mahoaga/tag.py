@@ -8,8 +8,7 @@ from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelPar
 
 
 from asyncio import sleep
-from Config import *
-from Plugins import Maho
+from Plugins.mode.config import Maho
 import time
 import random
 
