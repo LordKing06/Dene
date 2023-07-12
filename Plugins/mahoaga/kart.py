@@ -50,7 +50,7 @@ async def mentionall(event):
         if msg == None:
             return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
     else:
-        return await event.respond("**Etikete başlamak için sebep yazın.\n\n(Örnek:** `/etag  Merhaba!`**)**")
+        return await event.respond("**Etikete başlamak için sebep yazın.\n\n(Örnek:** `/ktag  Merhaba!`**)**")
   
     group_participants = await Maho.get_participants(event.chat_id)
 
@@ -66,7 +66,7 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(emoji)}](tg://user?id={x.id})\n"
+            usrtxt += f"⌯ [{random.choice(kart)}](tg://user?id={x.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
