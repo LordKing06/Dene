@@ -25,7 +25,8 @@ async def cancel_spam(event):
         except:
             pass
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
-        await asyncio.sleep(25)  # 25 saniye bekleme süresi
+        await show_output(event.chat_id)
+        await sleep(20) # 20 saniye beklemesüresi
         await delete_output(event.chat_id)
 
 @Maho.on(events.NewMessage(pattern="^/sor ?(.*)"))
@@ -56,7 +57,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
         username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"👤 {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
+        usrtxt += f"↪ {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
 
         if event.chat_id not in anlik_calisan:
             return
@@ -80,7 +81,7 @@ async def mentionall(event):
   
         output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
         await Maho.send_message(event.chat_id, output)
-        await sleep(25)  # 25 saniye bekleme süresi
+        await sleep(20)  # 20 saniye bekleme süresi
         await Maho.send_message(event.chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
         await show_output(event.chat_id)
 
@@ -91,13 +92,12 @@ async def show_output(chat_id):
   
     output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
     await Maho.send_message(chat_id, output)
-    await asyncio.sleep(25)
-    await delete_output(chat_id)
 
 async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
 
 
 
