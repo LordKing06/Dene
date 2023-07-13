@@ -26,7 +26,7 @@ async def cancel_spam(event):
             pass
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
         await show_output(event.chat_id)
-        await asyncio.sleep(15)  # 15 saniye bekleme süresi
+        await sleep(20)  # 20 saniye bekleme süresi
         await delete_output(event.chat_id)
 
 @Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
@@ -41,88 +41,58 @@ async def mentionall(event):
         admins.append(admin.id)
     if event.sender_id not in admins:
         return await event.respond(f"{noadmin}")
-  
-    if event.pattern_match.group(1):
-        mode = "text_on_cmd"
-        msg = event.pattern_match.group(1)
-    elif event.reply_to_msg_id:
-        mode = "text_on_reply"
-        msg = await event.get_reply_message()
-        if msg == None:
-            return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
-    else:
-        return await event.respond("**Geçerli bir mesaj belirtmelisiniz. /tag Merhaba**")
-  
+
     group_participants = await Maho.get_participants(event.chat_id)
+    anlik_calisan.append(event.chat_id)
+    usrnum = 0
+    usrtxt = ""
+    rxyzdev_tagTot[event.chat_id] = 0
 
-    if mode == "text_on_cmd":
-        anlik_calisan.append(event.chat_id)
-        usrnum = 0
-        usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
-        await event.respond("✅ Etiket işlemi başladı.")
+    await event.respond('**✅ Etiket işlemi başarıyla başlatıldı.**')
 
-        for usr in group_participants:
-            if usr.deleted or usr.bot:
-                continue 
+    for usr in group_participants:
+        if usr.bot:
+            continue
+        if usr.deleted:
+            continue
 
-            usrnum += 1
-            usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
+        usrnum += 1
+        cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
+        username = f"🔘 @{usr.username}" if usr.username else cleaned_name
+        usrtxt += f"↪ [{usr.first_name}](tg://user?id={usr.id})\n"
 
-            if event.chat_id not in anlik_calisan:
-                return
+        if event.chat_id not in anlik_calisan:
+            return
 
-            if usrnum == 5:
-                await Maho.send_message(event.chat_id, f"⌯ 📢 {msg}\n\n{usrtxt}")
-                await asyncio.sleep(3)
-                usrnum = 0
-                usrtxt = ""
+        if usrnum == 5:
+            await Maho.send_message(event.chat_id, usrtxt)
+            await asyncio.sleep(10)
+            usrnum = 0
+            usrtxt = ""
 
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+        rxyzdev_tagTot[event.chat_id] += 1
 
-        if event.chat_id in rxyzdev_tagTot:
-           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
-           await asyncio.sleep(10)
-           await a.delete()
+    sender = await event.get_sender()
+    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
-    if mode == "text_on_reply":
-        anlik_calisan.append(event.chat_id)
-        usrnum = 0
-        usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
-
-        for usr in group_participants:
-            usrnum += 1
-            usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
-
-            if event.chat_id not in anlik_calisan:
-                return
-
-            if usrnum == 5:
-                await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
-                await asyncio.sleep(5)
-                usrnum = 0
-                usrtxt = ""
-
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
-
-       
-        if event.chat_id in rxyzdev_tagTot:
-           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
-           await asyncio.sleep(10)
-           await a.delete()
+    if event.chat_id in rxyzdev_tagTot:
+        member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+        tag_count = rxyzdev_tagTot[event.chat_id]
+        bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
+        total_count = len(member_count)
+  
+        output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
+        await Maho.send_message(event.chat_id, output)
+        await sleep(20)  # 20 saniye bekleme süresi
+        await Maho.send_message(event.chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
+        await show_output(event.chat_id)
 
 async def show_output(chat_id):
     member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
     tag_count = rxyzdev_tagTot[chat_id]
-    deleted_accounts = len(group_participants) - len(member_count)
-    output = f"📢 Etiketlenen toplam üye sayısı: {tag_count - deleted_accounts}"
+    total_count = len(member_count)
+  
+    output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
     await Maho.send_message(chat_id, output)
 
 async def delete_output(chat_id):
