@@ -27,7 +27,7 @@ async def cancel_spam(event):
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
         await show_output(event.chat_id)
 
-@Maho.on(events.NewMessage(pattern="^/stag$"))
+@Maho.on(events.NewMessage(pattern="^/sor$"))
 async def mentionall(event):
     global anlik_calisan 
     rxyzdev_tagTot[event.chat_id] = 0
@@ -55,7 +55,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
         username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id}) {username}, @{event.sender.username}\n"
+        usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id}) {username}, @{event.sender.username}\n"
 
         if event.chat_id not in anlik_calisan:
             return
