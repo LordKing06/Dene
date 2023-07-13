@@ -63,20 +63,23 @@ async def mentionall(event):
     async for usr in Maho.iter_participants(event.chat_id):
         usrnum += 1
         if mode == "text_on_cmd":
-            if not usr.deleted:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
+            if not usr.deleted and not usr.bot:
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
         elif mode == "text_only":
-            if not usr.deleted:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
+            if not usr.deleted and not usr.bot:
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
 
-        if not usr.deleted:
+        if not usr.deleted and not usr.bot:
             rxyzdev_tagTot[event.chat_id] += 1
 
         if usrnum == 1:
             buttons = [
                 Button.inline("⛔ Durdur", data="cancel")
             ]
-            await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
+            try:
+                await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
+            except ValueError:
+                return await event.respond("**Boş bir mesaj gönderilemez. Lütfen bir mesaj girin.**")
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -92,6 +95,7 @@ async def mentionall(event):
 
         await asyncio.sleep(50)
         await msg.delete()
+
 
 
 
