@@ -63,7 +63,7 @@ async def mentionall(event):
 
         if usrnum == 1:
             await Maho.send_message(event.chat_id, usrtxt)
-            await asyncio.sleep(12)
+            await asyncio.sleep(10)
             usrnum = 0
             usrtxt = ""
 
