@@ -79,7 +79,7 @@ async def mentionall(event):
   
         output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Gerçek üye sayısı: {len(member_count)}\n🤖 Bot sayısı: {len(bot_count)}\n👥 Etiketlenen kişi sayısı: {tag_count}\n👥 Toplam üye sayısı: {total_count}"
         await Maho.send_message(event.chat_id, output)
-        await sleep(45)  # 45 saniye bekleme süresi
+        await sleep(25)  # 25 saniye bekleme süresi
         await Maho.send_message(event.chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
         await show_output(event.chat_id)
 
@@ -90,6 +90,10 @@ async def show_output(chat_id):
   
     output = f"👥 Gerçek üye sayısı: {len(member_count)}\n👥 Etiketlenen kişi sayısı: {tag_count}\n👥 Toplam üye sayısı: {total_count}"
     await Maho.send_message(chat_id, output)
+    await asyncio.sleep(45)
+    await Maho.send_message(chat_id, "🔒 Etiket çıktısı süresi sona erdi. Üye sayıları silindi.")
+
+
 
 
 
