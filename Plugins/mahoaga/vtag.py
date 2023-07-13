@@ -76,7 +76,7 @@ async def mentionall(event):
             buttons = [
                 Button.inline("⛔ Durdur", data="cancel")
             ]
-            await Maho.send_message(event.chat_id, "Sorularla etiketleme başlatıldı.\n\n" + usrtxt, buttons=buttons)
+            await Maho.send_message(event.chat_id, f"Sorularla etiketleme başlatıldı.\n\n{usrtxt}", buttons=buttons)
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -88,9 +88,10 @@ async def mentionall(event):
         member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
         tag_count = rxyzdev_tagTot[event.chat_id]
         result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
-        msg = await event.respond(result_text)
+        msg = await event.respond(result_text, buttons=[Button.inline("⛔ Durdur", data="cancel")])
         await sleep(50)
         await msg.delete()
+
 
 # SORU ile etiketleme modülü
 
