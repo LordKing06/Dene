@@ -40,20 +40,12 @@ async def mentionall(event):
     if event.sender_id not in admins:
         return await event.respond(f"{noadmin}")
 
-    mode = "text_only"
-    msg = "Bir mesaj girin."  # Varsayılan mesaj
-
     anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
     rxyzdev_tagTot[event.chat_id] = 0
 
-    real_members = 0
-    bot_count = 0
-    deleted_count = 0
-
     async for usr in Maho.iter_participants(event.chat_id):
-        usrnum += 1
         if not usr.deleted and not usr.bot:
             secilen_soru = random.choice(soru)
             usrtxt += f"💡 {secilen_soru} ? ➥ @{usr.username}\n"
@@ -66,7 +58,7 @@ async def mentionall(event):
             try:
                 await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
             except ValueError:
-                return await event.respond("**Boş bir mesaj gönderilemez. Lütfen bir mesaj girin.**")
+                pass
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -76,11 +68,12 @@ async def mentionall(event):
     bot_count = sum(1 for usr in member_count if usr.bot)
     deleted_count = sum(1 for usr in member_count if usr.deleted)
 
-    result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {real_members}\nToplam üye sayısı: {len(member_count)}"
+    result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {real_members}\nToplam üye sayısı: {len(member_count)}"
     msg = await event.respond(result_text)
 
     await asyncio.sleep(50)
     await msg.delete()
+
 
 
 
