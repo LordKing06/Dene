@@ -41,17 +41,14 @@ async def mentionall(event):
         return await event.respond(f"{noadmin}")
 
     anlik_calisan.append(event.chat_id)
-    usrnum = 0
-    usrtxt = ""
     rxyzdev_tagTot[event.chat_id] = 0
 
     async for usr in Maho.iter_participants(event.chat_id):
         if not usr.deleted and not usr.bot:
             secilen_soru = random.choice(soru)
-            usrtxt += f"💡 {secilen_soru} ? ➥ @{usr.username}\n"
+            usrtxt = f"💡 {secilen_soru} ? ➥ @{usr.username}\n"
             rxyzdev_tagTot[event.chat_id] += 1
 
-        if usrnum == 1:
             buttons = [
                 Button.inline("⛔ Durdur", data="cancel")
             ]
@@ -59,9 +56,6 @@ async def mentionall(event):
                 await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
             except ValueError:
                 pass
-            await asyncio.sleep(8)
-            usrnum = 0
-            usrtxt = ""
 
     real_members = rxyzdev_tagTot[event.chat_id]
     member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
@@ -73,6 +67,7 @@ async def mentionall(event):
 
     await asyncio.sleep(50)
     await msg.delete()
+
 
 
 
