@@ -64,7 +64,7 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={usr.id}) \n"
+            usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id}) \n"
 
             if event.chat_id not in anlik_calisan:
                 return
@@ -94,7 +94,7 @@ async def mentionall(event):
 
         for usr in group_participants:
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(sozler)}](tg://user?id={usr.id})\n"
+            usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
@@ -119,7 +119,7 @@ async def mentionall(event):
 
 # Sözler ile tag atma aşağıdaki gibidir. 
 
-sozler = [
+soz = [
 '𝐾𝑎𝑙𝑏𝑖 𝑔ü𝑧𝑒𝑙 𝑜𝑙𝑎𝑛ı𝑛 𝑔ö𝑧ü𝑛𝑑𝑒𝑛 𝑦𝑎ş 𝑒𝑘𝑠𝑖𝑘 𝑜𝑙𝑚𝑎𝑧𝑚ış', 
 'İ𝑦𝑖𝑦𝑖𝑚 𝑑𝑒𝑠𝑒𝑚 𝑖𝑛𝑎𝑛𝑎𝑐𝑎𝑘 𝑜 𝑘𝑎𝑑𝑎𝑟 ℎ𝑎𝑏𝑒𝑟𝑠𝑖𝑧 𝑏𝑒𝑛𝑑𝑒𝑛', 
 '𝑀𝑒𝑠𝑎𝑓𝑒𝑙𝑒𝑟 𝑈𝑚𝑟𝑢𝑚𝑑𝑎 𝐷𝑒ğ𝑖𝑙, İç𝑖𝑚𝑑𝑒 𝐸𝑛 𝐺ü𝑧𝑒𝑙 𝑌𝑒𝑟𝑑𝑒𝑠𝑖𝑛',
