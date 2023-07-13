@@ -39,7 +39,7 @@ async def mentionall(event):
     async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
-        return await event.respond(f"{noadmin")
+        return await event.respond(f"{noadmin}")
   
     if event.pattern_match.group(1):
         mode = "text_on_cmd"
