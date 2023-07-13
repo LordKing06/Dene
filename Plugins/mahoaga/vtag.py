@@ -26,7 +26,7 @@ async def cancel_spam(event):
             pass
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
         await show_output(event.chat_id)
-        await sleep(20) # 20 saniye beklemesüresi
+        await sleep(20)  # 20 saniye bekleme süresi
         await delete_output(event.chat_id)
 
 @Maho.on(events.NewMessage(pattern="^/sor ?(.*)"))
@@ -48,6 +48,8 @@ async def mentionall(event):
     usrtxt = ""
     rxyzdev_tagTot[event.chat_id] = 0
 
+    await event.respond('**✅ Etiket işlemi başarıyla başlatıldı.**')
+
     for usr in group_participants:
         if usr.bot:
             continue
@@ -57,7 +59,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
         username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"↪ {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
+        usrtxt += f"👤 {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
 
         if event.chat_id not in anlik_calisan:
             return
@@ -97,14 +99,6 @@ async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
-
-
-
-
-
-
-
-
 
 
 
