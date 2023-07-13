@@ -9,7 +9,7 @@ from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
 import random
-from soru import soru
+
 
 anlik_calisan = []
 rxyzdev_tagTot = {}
