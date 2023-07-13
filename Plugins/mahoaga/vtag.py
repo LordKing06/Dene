@@ -10,7 +10,6 @@ from Plugins.mode.config import Maho
 import time
 import random
 
-
 anlik_calisan = []
 rxyzdev_tagTot = {}
 rxyzdev_initT = {}
@@ -41,7 +40,7 @@ async def mentionall(event):
         return await event.respond(f"{noadmin}")
 
     mode = "text_only"
-    msg = "Bir mesaj girin."  # Varsayılan mesaj
+    msg = ""  # Varsayılan mesaj
 
     anlik_calisan.append(event.chat_id)
     usrnum = 0
@@ -70,7 +69,10 @@ async def mentionall(event):
         rxyzdev_tagTot[event.chat_id] += 1
 
         if usrnum == 1:
-            await Maho.send_message(event.chat_id, usrtxt)
+            buttons = [
+                Button.inline("⛔ Durdur", data="cancel")
+            ]
+            await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -83,6 +85,7 @@ async def mentionall(event):
         tag_count = rxyzdev_tagTot[event.chat_id]
         result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
         await event.respond(result_text)
+
 
 
 
