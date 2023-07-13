@@ -24,7 +24,8 @@ async def cancel_spam(event):
             anlik_calisan.remove(event.chat_id)
         except:
             pass
-        return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+        await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+        await show_output(event.chat_id)
 
 @Maho.on(events.NewMessage(pattern="^/stag$"))
 async def mentionall(event):
@@ -54,7 +55,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
         username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"⌯ [{random.choice(soru)}](tg://user?id={usr.id}) {username}, @{event.sender.username}\n"
+        usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id}) {username}, @{event.sender.username}\n"
 
         if event.chat_id not in anlik_calisan:
             return
@@ -76,6 +77,17 @@ async def mentionall(event):
         a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
         await sleep(45)  # 45 saniye bekleme süresi
         await a.delete()
+
+async def show_output(chat_id):
+    member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
+    bot_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsBots())
+    tag_count = rxyzdev_tagTot[chat_id]
+    deleted_count = len(member_count) - tag_count
+    total_count = len(member_count)
+  
+    output = f"Gerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {total_count}"
+    await Maho.send_message(chat_id, output)
+
 
 
 
