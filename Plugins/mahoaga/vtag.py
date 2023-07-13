@@ -55,7 +55,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''
         username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"{random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
+        usrtxt += f"👤 {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
 
         if event.chat_id not in anlik_calisan:
             return
@@ -74,18 +74,23 @@ async def mentionall(event):
     if event.chat_id in rxyzdev_tagTot:
         member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
         tag_count = rxyzdev_tagTot[event.chat_id]
-        a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
+        bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
+        total_count = len(member_count)
+  
+        output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Gerçek üye sayısı: {len(member_count)}\n🤖 Bot sayısı: {len(bot_count)}\n👥 Etiketlenen kişi sayısı: {tag_count}\n👥 Toplam üye sayısı: {total_count}"
+        await Maho.send_message(event.chat_id, output)
         await sleep(45)  # 45 saniye bekleme süresi
-        await a.delete()
+        await Maho.send_message(event.chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
+        await show_output(event.chat_id)
 
 async def show_output(chat_id):
     member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
-    bot_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsBots())
-    deleted_count = len(member_count) - rxyzdev_tagTot[chat_id]
+    tag_count = rxyzdev_tagTot[chat_id]
     total_count = len(member_count)
   
-    output = f"Gerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {rxyzdev_tagTot[chat_id]}\nToplam üye sayısı: {total_count}"
+    output = f"👥 Gerçek üye sayısı: {len(member_count)}\n👥 Etiketlenen kişi sayısı: {tag_count}\n👥 Toplam üye sayısı: {total_count}"
     await Maho.send_message(chat_id, output)
+
 
 
 
