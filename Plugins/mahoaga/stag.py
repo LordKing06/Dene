@@ -8,6 +8,16 @@ from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelPar
 from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
+import os
+import logging
+import asyncio
+from telethon import Button, events
+from telethon.sessions import StringSession
+from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
+from asyncio import sleep
+from Plugins.mode.config import Maho
+import time
 import random
 
 anlik_calisan = []
@@ -56,33 +66,41 @@ async def mentionall(event):
         anlik_calisan.append(event.chat_id)
         usrnum = 0
         usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
-        await event.respond("✅ Etiket işlemi başladı.")
+        real_members = 0
+        bot_count = 0
+        deleted_count = 0
+        rxyzdev_tagTot[event.chat_id] = 0
 
         for usr in group_participants:
-            if usr.deleted or usr.bot:
-                continue 
+            if usr.bot:
+                bot_count += 1
+                continue
+            if usr.deleted:
+                deleted_count += 1
+                continue
+            real_members += 1
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id}) \n"
+            usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id})\n"
 
             if event.chat_id not in anlik_calisan:
                 return
 
             if usrnum == 1:
                 await Maho.send_message(event.chat_id, f"⌯ 📢 {msg}\n\n{usrtxt}")
-                await asyncio.sleep(8)
+                await asyncio.sleep(12)
                 usrnum = 0
                 usrtxt = ""
+
+            rxyzdev_tagTot[event.chat_id] += 1
 
         sender = await event.get_sender()
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
         if event.chat_id in rxyzdev_tagTot:
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {len(member_count) - tag_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
            await sleep(45)  # 45 saniye bekleme süresi
            await a.delete()
 
@@ -90,9 +108,20 @@ async def mentionall(event):
         anlik_calisan.append(event.chat_id)
         usrnum = 0
         usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
+        real_members = 0
+        bot_count = 0
+        deleted_count = 0
+        rxyzdev_tagTot[event.chat_id] = 0
 
         for usr in group_participants:
+            if usr.bot:
+                bot_count += 1
+                continue
+            if usr.deleted:
+                deleted_count += 1
+                continue
+            real_members += 1
+
             usrnum += 1
             usrtxt += f"⌯ [{random.choice(soz)}](tg://user?id={usr.id})\n"
 
@@ -101,20 +130,22 @@ async def mentionall(event):
 
             if usrnum == 1:
                 await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
-                await asyncio.sleep(8)
+                await asyncio.sleep(12)
                 usrnum = 0
                 usrtxt = ""
+
+            rxyzdev_tagTot[event.chat_id] += 1
 
         sender = await event.get_sender()
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
         if event.chat_id in rxyzdev_tagTot:
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {len(member_count) - tag_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
            await sleep(45)  # 45 saniye bekleme süresi
            await a.delete()
+
 
 
 # Sözler ile tag atma aşağıdaki gibidir. 
