@@ -9,6 +9,7 @@ from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
 import random
+from soru import soru
 
 anlik_calisan = []
 rxyzdev_tagTot = {}
@@ -62,17 +63,20 @@ async def mentionall(event):
     async for usr in Maho.iter_participants(event.chat_id):
         usrnum += 1
         if mode == "text_on_cmd":
-            usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
+            if not usr.deleted:
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
         elif mode == "text_only":
-            usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
+            if not usr.deleted:
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
 
-        rxyzdev_tagTot[event.chat_id] += 1
+        if not usr.deleted:
+            rxyzdev_tagTot[event.chat_id] += 1
 
         if usrnum == 1:
             buttons = [
                 Button.inline("⛔ Durdur", data="cancel")
             ]
-            await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
+            await Maho.send_message(event.chat_id, "Sorularla etiketleme başlatıldı.\n\n" + usrtxt, buttons=buttons)
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -84,10 +88,9 @@ async def mentionall(event):
         member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
         tag_count = rxyzdev_tagTot[event.chat_id]
         result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
-        await event.respond(result_text)
-
-
-
+        msg = await event.respond(result_text)
+        await sleep(50)
+        await msg.delete()
 
 # SORU ile etiketleme modülü
 
