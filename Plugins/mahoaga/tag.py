@@ -26,7 +26,7 @@ async def cancel_spam(event):
             pass
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
         await show_output(event.chat_id)
-        await sleep(15)  # 15 saniye bekleme süresi
+        await asyncio.sleep(15)  # 15 saniye bekleme süresi
         await delete_output(event.chat_id)
 
 @Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
@@ -83,10 +83,9 @@ async def mentionall(event):
 
         if event.chat_id in rxyzdev_tagTot:
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
-           await sleep(10)
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
+           await asyncio.sleep(10)
            await a.delete()
 
     if mode == "text_on_reply":
@@ -114,20 +113,21 @@ async def mentionall(event):
        
         if event.chat_id in rxyzdev_tagTot:
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
-           await sleep(10)
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı.")
+           await asyncio.sleep(10)
            await a.delete()
 
 async def show_output(chat_id):
     member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
     tag_count = rxyzdev_tagTot[chat_id]
-    output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
+    deleted_accounts = len(group_participants) - len(member_count)
+    output = f"📢 Etiketlenen toplam üye sayısı: {tag_count - deleted_accounts}"
     await Maho.send_message(chat_id, output)
 
 async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
 
