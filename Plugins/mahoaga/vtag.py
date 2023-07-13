@@ -41,7 +41,7 @@ async def mentionall(event):
         return await event.respond(f"{noadmin}")
 
     mode = "text_only"
-    msg = ""  # Varsayılan mesaj
+    msg = "Bir mesaj girin."  # Varsayılan mesaj
 
     anlik_calisan.append(event.chat_id)
     usrnum = 0
@@ -64,10 +64,10 @@ async def mentionall(event):
         usrnum += 1
         if mode == "text_on_cmd":
             if not usr.deleted:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
         elif mode == "text_only":
             if not usr.deleted:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
 
         if not usr.deleted:
             rxyzdev_tagTot[event.chat_id] += 1
@@ -76,7 +76,7 @@ async def mentionall(event):
             buttons = [
                 Button.inline("⛔ Durdur", data="cancel")
             ]
-            await Maho.send_message(event.chat_id, f"Sorularla etiketleme başlatıldı.\n\n{usrtxt}", buttons=buttons)
+            await Maho.send_message(event.chat_id, usrtxt, buttons=buttons)
             await asyncio.sleep(8)
             usrnum = 0
             usrtxt = ""
@@ -88,9 +88,11 @@ async def mentionall(event):
         member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
         tag_count = rxyzdev_tagTot[event.chat_id]
         result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
-        msg = await event.respond(result_text, buttons=[Button.inline("⛔ Durdur", data="cancel")])
-        await sleep(50)
+        msg = await event.respond(result_text)
+
+        await asyncio.sleep(50)
         await msg.delete()
+
 
 
 # SORU ile etiketleme modülü
