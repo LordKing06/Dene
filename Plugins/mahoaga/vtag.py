@@ -5,11 +5,11 @@ from telethon import Button, events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
-
 from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
 import random
+
 
 anlik_calisan = []
 rxyzdev_tagTot = {}
@@ -41,66 +41,48 @@ async def mentionall(event):
         return await event.respond(f"{noadmin}")
 
     mode = "text_only"
-    msg = ""  # Varsayılan mesaj
+    msg = "Bir mesaj girin."  # Varsayılan mesaj
 
-    # Durdurma butonunu oluşturma
-    durdur_button = Button.inline("⛔ Durdur", data="cancel")
+    anlik_calisan.append(event.chat_id)
+    usrnum = 0
+    usrtxt = ""
+    rxyzdev_tagTot[event.chat_id] = 0
 
-    # Etiket işlemini başlatma mesajını gönderme
-    start_msg = await event.respond("✅ Etiket işlemi başladı.", buttons=durdur_button)
+    real_members = 0
+    bot_count = 0
+    deleted_count = 0
 
-    # Durdurma butonuna tıklanırsa etiket işlemi durdurulur
-    @Maho.on(events.CallbackQuery(data="cancel"))
-    async def cancel_process(event):
-        if event.chat_id in anlik_calisan:
-            anlik_calisan.remove(event.chat_id)
-            await event.answer("✅ Etiket işlemi başarıyla durduruldu.")
-            await start_msg.delete()
+    async for user in Maho.iter_participants(event.chat_id):
+        if user.bot:
+            bot_count += 1
+        elif user.deleted:
+            deleted_count += 1
+        else:
+            real_members += 1
 
-    # ...
+    async for usr in Maho.iter_participants(event.chat_id):
+        usrnum += 1
+        if mode == "text_on_cmd":
+            usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
+        elif mode == "text_only":
+            usrtxt += f"💡 {random.choice(soru)} ? ➥ [{usr.first_name}](tg://user?id={usr.id})\n"
 
-    if mode == "text_on_cmd" or mode == "text_only":
-        anlik_calisan.append(event.chat_id)
-        usrnum = 0
-        usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = 0
+        rxyzdev_tagTot[event.chat_id] += 1
 
-        real_members = 0
-        bot_count = 0
-        deleted_count = 0
+        if usrnum == 1:
+            await Maho.send_message(event.chat_id, usrtxt)
+            await asyncio.sleep(8)
+            usrnum = 0
+            usrtxt = ""
 
-        async for user in Maho.iter_participants(event.chat_id):
-            if user.bot:
-                bot_count += 1
-            elif user.deleted:
-                deleted_count += 1
-            else:
-                real_members += 1
+    sender = await event.get_sender()
+    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
-        async for usr in Maho.iter_participants(event.chat_id):
-            usrnum += 1
-            if mode == "text_on_cmd":
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
-            elif mode == "text_only":
-                usrtxt += f"💡 {random.choice(soru)} ?\n"
-
-            rxyzdev_tagTot[event.chat_id] += 1
-
-            # ...
-
-        # ...
-
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
-
-        if event.chat_id in rxyzdev_tagTot:
-            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-            tag_count = rxyzdev_tagTot[event.chat_id]
-            result_text = f"✅ Etiket işlemi başarıyla durduruldu.\n\n💡 İptal et\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
-            a = await event.respond(result_text)
-            await sleep(10)
-            await a.delete()
-
+    if event.chat_id in rxyzdev_tagTot:
+        member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+        tag_count = rxyzdev_tagTot[event.chat_id]
+        result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
+        await event.respond(result_text)
 
 
 
