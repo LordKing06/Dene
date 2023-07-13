@@ -66,7 +66,7 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={usr.id})\n"
+            usrtxt += f"[{random.choice(bayrak)}](tg://user?id={usr.id})"
 
             if event.chat_id not in anlik_calisan:
                 return
@@ -96,7 +96,7 @@ async def mentionall(event):
 
         for usr in group_participants:
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(bayrak)}](tg://user?id={usr.id})\n"
+            usrtxt += f"[{random.choice(bayrak)}](tg://user?id={usr.id})"
 
             if event.chat_id not in anlik_calisan:
                 return
