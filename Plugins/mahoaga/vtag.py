@@ -63,7 +63,7 @@ async def mentionall(event):
         anlik_calisan.append(event.chat_id)
         usrnum = 0
         usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
+        rxyzdev_tagTot[event.chat_id] = 0
 
         real_members = 0
         bot_count = 0
@@ -77,12 +77,14 @@ async def mentionall(event):
             else:
                 real_members += 1
 
-        for usr in group_participants:
+        async for usr in Maho.iter_participants(event.chat_id):
             usrnum += 1
             if mode == "text_on_cmd":
-                usrtxt += f"💡 {random.choice(soru)} ➥ [{usr.username}](tg://user?id={usr.id})\n"
+                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
             elif mode == "text_only":
-                usrtxt += f"💡 {random.choice(soru)} ➥ [{usr.username}](tg://user?id={usr.id})\n"
+                usrtxt += f"💡 {random.choice(soru)} ?\n"
+
+            rxyzdev_tagTot[event.chat_id] += 1
 
             # ...
 
@@ -94,10 +96,12 @@ async def mentionall(event):
         if event.chat_id in rxyzdev_tagTot:
             member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
             tag_count = rxyzdev_tagTot[event.chat_id]
-            result_text = f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
+            result_text = f"✅ Etiket işlemi başarıyla durduruldu.\n\n💡 İptal et\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
             a = await event.respond(result_text)
-            await sleep(50)
+            await sleep(10)
             await a.delete()
+
+
 
 
 # SORU ile etiketleme modülü
