@@ -80,9 +80,9 @@ async def mentionall(event):
         for usr in group_participants:
             usrnum += 1
             if mode == "text_on_cmd":
-                usrtxt += f"[{random.choice(soru)}](tg://user?id={usr.id})\n"
+                usrtxt += f"💡 {random.choice(soru)} ➥ [{usr.username}](tg://user?id={usr.id})\n"
             elif mode == "text_only":
-                usrtxt += f"[{random.choice(soru)}]\n"
+                usrtxt += f"💡 {random.choice(soru)} ➥ [{usr.username}](tg://user?id={usr.id})\n"
 
             # ...
 
