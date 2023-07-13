@@ -68,13 +68,13 @@ async def mentionall(event):
                 continue 
 
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(kart)}](tg://user?id={usr.id})\n"
+            usrtxt += f"[{random.choice(kart)}](tg://user?id={usr.id})"
 
             if event.chat_id not in anlik_calisan:
                 return
 
             if usrnum == 5:
-                await Maho.send_message(event.chat_id, f"⌯ 📢 {msg}\n\n{usrtxt}")
+                await Maho.send_message(event.chat_id, f"⌯ 📢 {msg} {usrtxt}")
                 await asyncio.sleep(8)
                 usrnum = 0
                 usrtxt = ""
@@ -87,7 +87,7 @@ async def mentionall(event):
            bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
            a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
+           await sleep(50)
            await a.delete()
 
     if mode == "text_on_reply":
@@ -98,7 +98,7 @@ async def mentionall(event):
 
         for usr in group_participants:
             usrnum += 1
-            usrtxt += f"⌯ [{random.choice(emoji)}](tg://user?id={usr.id})\n"
+            usrtxt += f"[{random.choice(emoji)}](tg://user?id={usr.id})"
 
             if event.chat_id not in anlik_calisan:
                 return
@@ -118,12 +118,8 @@ async def mentionall(event):
            bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
            a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
+           await sleep(50)
            await a.delete()
-
-# Bayrak ile Tag işlemi Aşağıdaki gibidir.
-
-bayrak = "🏳️‍🌈 🏳️‍⚧️ 🇺🇳 🇦🇫 🇦🇽 🇦🇱 🇩🇿 🇦🇸 🇦🇩 🇦🇴 🇦🇮 🇦🇶 🇦🇬 🇦🇷 🇦🇲 🇦🇼 🇦🇺 🇦🇹 🇦🇿 🇧🇸 🇧🇭 🇧🇩  🇧🇧 🇧🇾 🇧🇪 🇧🇿 🇧🇯 🇧🇷 🇧🇼 🇧🇦 🇧🇴 🇧🇹 🇧🇲 🇻🇬 🇧🇳 🇧🇬 🇧🇫 🇧🇮 🇰🇭 🇰🇾 🇧🇶 🇨🇻 🇮🇨 🇨🇦 🇨🇲 🇨🇫 🇹🇩 🇮🇴 🇨🇳 🇨🇱 🇨🇽 🇨🇰 🇨🇩 🇨🇬 🇰🇲 🇨🇴 🇨🇨 🇨🇷 🇨🇿 🇪🇬 🇪🇹 🇪🇺 🇸🇻 🇩🇰 🇨🇮 🇭🇷 🇨🇺 🇨🇼 🇨🇾 🇪🇨 🇩🇴 🇩🇲 🇩🇯 🇬🇶 🇪🇷 🇫🇴 🇫🇰 🇫🇯 🇪🇪 🇸🇿 🇫🇮 🇬🇲 🇬🇦 🇹🇫 🇵🇫 🇬🇫 🇫🇷 🇬🇪 🇩🇪 🇬🇭 🇬🇮 🇬🇷 🇬🇱 🇬🇳 🇬🇬 🇬🇹 🇬🇺 🇬🇵 🇬🇩 🇬🇼 🇬🇾 🇭🇹 🇭🇳 🇭🇰 🇭🇺 🎌 🇮🇪 🇮🇶 🇯🇵 🇯🇲 🇮🇷 🇮🇩 🇮🇹 🇮🇱 🇮🇳 🇮🇸 🇮🇲 🇯🇪 🇯🇴 🇰🇬 🇰🇼 🇱🇷 🇱🇾 🇱🇮 🇱🇦 🇰🇿 🇰🇪 🇱🇻 🇱🇹 🇱🇺 🇱🇧 🇰🇮 🇽🇰 🇱🇸 🇲🇴 🇲🇹 🇲🇱 🇲🇻 🇲🇾 🇲🇼 🇲🇬 🇹🇷 🇹🇱 🇸🇪 🇸🇩 🇸🇧 🇸🇴 🇰🇷".split(" ")
 
 # Emojiler ile Tag işlemi Aşağıdaki gibidir.
 
