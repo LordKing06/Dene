@@ -41,7 +41,7 @@ async def mentionall(event):
         return await event.respond(f"{noadmin}")
 
     mode = "text_only"
-    msg = "Bir mesaj girin."  # Varsayılan mesaj
+    msg = ""  # Varsayılan mesaj
 
     # Durdurma butonunu oluşturma
     durdur_button = Button.inline("⛔ Durdur", data="cancel")
@@ -96,7 +96,7 @@ async def mentionall(event):
             tag_count = rxyzdev_tagTot[event.chat_id]
             result_text = f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
             a = await event.respond(result_text)
-            await sleep(10)
+            await sleep(50)
             await a.delete()
 
 
