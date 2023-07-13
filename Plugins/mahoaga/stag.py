@@ -5,8 +5,6 @@ from telethon import Button, events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
-
-
 from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
@@ -84,8 +82,8 @@ async def mentionall(event):
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
            bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {len(member_count) - tag_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
+           await sleep(45)  # 45 saniye bekleme süresi
            await a.delete()
 
     if mode == "text_on_reply":
@@ -110,14 +108,14 @@ async def mentionall(event):
         sender = await event.get_sender()
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
-       
         if event.chat_id in rxyzdev_tagTot:
            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
            bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
            tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
+           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {len(member_count)}\nBot sayısı: {len(bot_count)}\nSilinen hesap sayısı: {len(member_count) - tag_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}")
+           await sleep(45)  # 45 saniye bekleme süresi
            await a.delete()
+
 
 # Sözler ile tag atma aşağıdaki gibidir. 
 
