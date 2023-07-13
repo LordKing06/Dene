@@ -52,24 +52,11 @@ async def mentionall(event):
     bot_count = 0
     deleted_count = 0
 
-    async for user in Maho.iter_participants(event.chat_id):
-        if user.bot:
-            bot_count += 1
-        elif user.deleted:
-            deleted_count += 1
-        else:
-            real_members += 1
-
     async for usr in Maho.iter_participants(event.chat_id):
         usrnum += 1
-        if mode == "text_on_cmd":
-            if not usr.deleted and not usr.bot:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
-        elif mode == "text_only":
-            if not usr.deleted and not usr.bot:
-                usrtxt += f"💡 {random.choice(soru)} ? ➥ @{usr.username}\n"
-
         if not usr.deleted and not usr.bot:
+            secilen_soru = random.choice(soru)
+            usrtxt += f"💡 {secilen_soru} ? ➥ @{usr.username}\n"
             rxyzdev_tagTot[event.chat_id] += 1
 
         if usrnum == 1:
@@ -84,17 +71,17 @@ async def mentionall(event):
             usrnum = 0
             usrtxt = ""
 
-    sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+    real_members = rxyzdev_tagTot[event.chat_id]
+    member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+    bot_count = sum(1 for usr in member_count if usr.bot)
+    deleted_count = sum(1 for usr in member_count if usr.deleted)
 
-    if event.chat_id in rxyzdev_tagTot:
-        member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-        tag_count = rxyzdev_tagTot[event.chat_id]
-        result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
-        msg = await event.respond(result_text)
+    result_text = f"✅ Etiket işlemi başarıyla tamamlandı.\n\n{usrtxt}\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {real_members}\nToplam üye sayısı: {len(member_count)}"
+    msg = await event.respond(result_text)
 
-        await asyncio.sleep(50)
-        await msg.delete()
+    await asyncio.sleep(50)
+    await msg.delete()
+
 
 
 
