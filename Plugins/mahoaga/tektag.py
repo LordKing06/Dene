@@ -28,7 +28,7 @@ async def cancel_spam(event):
             pass
         return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-@Maho.on(events.NewMessage(pattern="^/tetag ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/tekli ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
     rxyzdev_tagTot[event.chat_id] = 0
@@ -39,7 +39,7 @@ async def mentionall(event):
     async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
-        return await event.respond("**Bu komutu sadece yöneticiler kullanabilir. ✋**")
+        return await event.respond(f"{noadmin")
   
     if event.pattern_match.group(1):
         mode = "text_on_cmd"
@@ -50,7 +50,7 @@ async def mentionall(event):
         if msg == None:
             return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
     else:
-        return await event.respond("**Etikete başlamak için sebep yazın.\n\n(Örnek:** `/tag Herkese Merhaba!`**)**")
+        return await event.respond(f"{nomesaj}")
   
     group_participants = await Maho.get_participants(event.chat_id)
 
