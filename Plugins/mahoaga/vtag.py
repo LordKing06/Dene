@@ -6,7 +6,6 @@ from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
 
-
 from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
@@ -28,96 +27,78 @@ async def cancel_spam(event):
             pass
         return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-@Maho.on(events.NewMessage(pattern="^/sor ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/sor$"))
 async def mentionall(event):
-    global anlik_calisan 
+    global anlik_calisan
     rxyzdev_tagTot[event.chat_id] = 0
     if event.is_private:
         return await event.respond("**Bu komutu sadece grup veya kanallarda kullanabilirsiniz.**")
-  
+
     admins = []
     async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
         return await event.respond(f"{noadmin}")
-  
-    if event.pattern_match.group(1):
-        mode = "text_on_cmd"
-        msg = event.pattern_match.group(1)
-    elif event.reply_to_msg_id:
-        mode = "text_on_reply"
-        msg = await event.get_reply_message()
-        if msg == None:
-            return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
-    else:
-        return await event.respond(f"{nomesaj}")
-  
-    group_participants = await Maho.get_participants(event.chat_id)
 
-    if mode == "text_on_cmd":
-        anlik_calisan.append(event.chat_id)
-        usrnum = 0
-        usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] = len(group_participants)
-        await event.respond("✅ Etiket işlemi başladı.")
+    mode = "text_only"
+    msg = "Bir mesaj girin."  # Varsayılan mesaj
 
-        for usr in group_participants:
-            if usr.deleted or usr.bot:
-                continue 
+    # Durdurma butonunu oluşturma
+    durdur_button = Button.inline("⛔ Durdur", data="cancel")
 
-            usrnum += 1
-            usrtxt += f"[{random.choice(soru)}](tg://user?id={usr.id})\n"
+    # Etiket işlemini başlatma mesajını gönderme
+    start_msg = await event.respond("✅ Etiket işlemi başladı.", buttons=durdur_button)
 
-            if event.chat_id not in anlik_calisan:
-                return
+    # Durdurma butonuna tıklanırsa etiket işlemi durdurulur
+    @Maho.on(events.CallbackQuery(data="cancel"))
+    async def cancel_process(event):
+        if event.chat_id in anlik_calisan:
+            anlik_calisan.remove(event.chat_id)
+            await event.answer("✅ Etiket işlemi başarıyla durduruldu.")
+            await start_msg.delete()
 
-            if usrnum == 1:
-                await Maho.send_message(event.chat_id, f"⌯ 📢 {msg}\n\n{usrtxt}")
-                await asyncio.sleep(8)
-                usrnum = 0
-                usrtxt = ""
+    # ...
 
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
-
-        if event.chat_id in rxyzdev_tagTot:
-           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
-           tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
-           await a.delete()
-
-    if mode == "text_on_reply":
+    if mode == "text_on_cmd" or mode == "text_only":
         anlik_calisan.append(event.chat_id)
         usrnum = 0
         usrtxt = ""
         rxyzdev_tagTot[event.chat_id] = len(group_participants)
 
+        real_members = 0
+        bot_count = 0
+        deleted_count = 0
+
+        async for user in Maho.iter_participants(event.chat_id):
+            if user.bot:
+                bot_count += 1
+            elif user.deleted:
+                deleted_count += 1
+            else:
+                real_members += 1
+
         for usr in group_participants:
             usrnum += 1
-            usrtxt += f"[{random.choice(soru)}](tg://user?id={usr.id})\n"
+            if mode == "text_on_cmd":
+                usrtxt += f"[{random.choice(soru)}](tg://user?id={usr.id})\n"
+            elif mode == "text_only":
+                usrtxt += f"[{random.choice(soru)}]\n"
 
-            if event.chat_id not in anlik_calisan:
-                return
+            # ...
 
-            if usrnum == 1:
-                await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
-                await asyncio.sleep(8)
-                usrnum = 0
-                usrtxt = ""
+        # ...
 
         sender = await event.get_sender()
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
-       
         if event.chat_id in rxyzdev_tagTot:
-           member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-           bot_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsBots())
-           tag_count = rxyzdev_tagTot[event.chat_id]
-           a = await event.respond(f"✅ Etiket işlemi başarıyla durduruldu.\n\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}\nToplam bot sayısı: {len(bot_count)}")
-           await sleep(10)
-           await a.delete()
+            member_count = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+            tag_count = rxyzdev_tagTot[event.chat_id]
+            result_text = f"✅ Etiket işlemi başarıyla durduruldu.\n\nGerçek üye sayısı: {real_members}\nBot sayısı: {bot_count}\nSilinen hesap sayısı: {deleted_count}\nEtiketlenen kişi sayısı: {tag_count}\nToplam üye sayısı: {len(member_count)}"
+            a = await event.respond(result_text)
+            await sleep(10)
+            await a.delete()
+
 
 # SORU ile etiketleme modülü
 
