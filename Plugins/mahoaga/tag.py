@@ -24,12 +24,8 @@ async def cancel_spam(event):
             anlik_calisan.remove(event.chat_id)
         except:
             pass
-        await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
-        await show_output(event.chat_id)
-        await sleep(20)  # 20 saniye bekleme süresi
-        await delete_output(event.chat_id)
-        
-
+        return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+ 
 @Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
