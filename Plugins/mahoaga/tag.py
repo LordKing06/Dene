@@ -43,7 +43,7 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"👥 - [{usr.first_name}](tg://user?id={usr.id}) \n"
+            usrtxt += f"📢 - [{usr.first_name}](tg://user?id={usr.id}) \n"
             if event.chat_id not in anlik_calisan:
                 await event.respond("**İşlem başarıyla durduruldu**❌\n\nSilinmiş hesaplar ve botlara etiket atılmamıştır.")
                 return
@@ -63,7 +63,7 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"👥 - [{usr.first_name}](tg://user?id={usr.id}) \n"
+            usrtxt += f"📢 - [{usr.first_name}](tg://user?id={usr.id}) \n"
             if event.chat_id not in anlik_calisan:
                 await event.respond("İşlem başarıyla durduruldu. ✅\n\nSilinmiş hesaplar ve botlara etiket atılmamıştır.")
                 return
