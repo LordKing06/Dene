@@ -62,7 +62,7 @@ async def mentionall(event):
             continue
 
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''        
-        username = f"🔘 @{usr.username}" if usr.username else cleaned_name
+        username = f"@{usr.username}" if usr.username else cleaned_name
         usrtxt += f"[{username}](tg://user?id={usr.id}), "
 
         usrnum += 1
