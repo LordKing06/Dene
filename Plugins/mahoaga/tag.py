@@ -43,7 +43,7 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📢  [{usr.first_name}](tg://user?id={usr.id}) ,"
+            usrtxt += f"📣  [{usr.first_name}](tg://user?id={usr.id}) ,"
             if event.chat_id not in anlik_calisan:
                 return
             if usrnum == 5:
@@ -62,7 +62,7 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📢  [{usr.first_name}](tg://user?id={usr.id}) ,"
+            usrtxt += f"📣  [{usr.first_name}](tg://user?id={usr.id}) ,"
             if event.chat_id not in anlik_calisan:
                 return
             if usrnum == 5:
