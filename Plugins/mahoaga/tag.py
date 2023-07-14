@@ -49,9 +49,9 @@ async def mentionall(event):
         usrnum = 0
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
-        await event.respond(f"**✅ Etiket işlemi başarıyla başlatıldı.**\n**Etiketleme işlemi için kullanılan ifade:** {msg}")
+        await event.respond(f"✅ Etiket işlemi başarıyla başlatıldı.\nEtiketleme işlemi için kullanılan ifade: {msg}")
 
-        async for usr in group_participants:
+        for usr in group_participants:
             if usr.deleted or usr.bot:
                 continue
 
@@ -69,18 +69,14 @@ async def mentionall(event):
 
             rxyzdev_tagTot[chat_id] += 1
 
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+        member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins())
+        tag_count = rxyzdev_tagTot[chat_id]
 
-        if chat_id in rxyzdev_tagTot:
-            member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins())
-            tag_count = rxyzdev_tagTot[chat_id]
-
-            output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
-            await Maho.send_message(chat_id, output)
-            await asyncio.sleep(20)  # 20 saniye bekleme süresi
-            await Maho.send_message(chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
-            await show_output(chat_id)
+        output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
+        await Maho.send_message(chat_id, output)
+        await asyncio.sleep(15)  # 15 saniye bekleme süresi
+        await Maho.send_message(chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
+        await show_output(chat_id)
 
     if mode == "text_on_reply":
         anlik_calisan[chat_id] = True
@@ -88,7 +84,7 @@ async def mentionall(event):
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
 
-        async for usr in group_participants:
+        for usr in group_participants:
             usrnum += 1
             usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
 
@@ -103,18 +99,14 @@ async def mentionall(event):
 
             rxyzdev_tagTot[chat_id] += 1
 
-        sender = await event.get_sender()
-        rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+        member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins())
+        tag_count = rxyzdev_tagTot[chat_id]
 
-        if chat_id in rxyzdev_tagTot:
-            member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins())
-            tag_count = rxyzdev_tagTot[chat_id]
-
-            output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
-            await Maho.send_message(chat_id, output)
-            await asyncio.sleep(20)  # 20 saniye bekleme süresi
-            await Maho.send_message(chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
-            await show_output(chat_id)
+        output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
+        await Maho.send_message(chat_id, output)
+        await asyncio.sleep(15)  # 15 saniye bekleme süresi
+        await Maho.send_message(chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
+        await show_output(chat_id)
 
 async def show_output(chat_id):
     member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins())
@@ -129,6 +121,4 @@ async def delete_output(chat_id):
             await msg.delete()
         except Exception as e:
             print(f"Hata: {e}")
-
-
-    
+  
