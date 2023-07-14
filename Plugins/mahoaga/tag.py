@@ -78,7 +78,7 @@ async def mentionall(event):
   
         output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
         await Maho.send_message(event.chat_id, output)
-        await sleep(20)  # 20 saniye bekleme süresi
+        await sleep(15)  # 20 saniye bekleme süresi
         await Maho.send_message(event.chat_id, "🔒 Etiket işlemi tamamlandı.")
         await show_output(event.chat_id)
         
@@ -87,9 +87,6 @@ async def show_output(chat_id):
     tag_count = rxyzdev_tagTot[chat_id]
     total_count = len(member_count)
   
-    output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
-    await Maho.send_message(chat_id, output)
-
 async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
