@@ -5,7 +5,7 @@ from telethon import TelegramClient
 # Telegram Client (Telethon)
 API_ID = 28496124
 API_HASH = "dcadf01f9a76befff2eccc932c6eabd1"
-bot_token = "6379409508:AAG79c2g2T8wP8Tp2zL8QGN7azMMVbi6Pc8"
+bot_token = "5794245713:AAFrLo6rEvVLpttP4VYsiam5-cE-HIg13G0"
 
 # test projesi.. 
 noadmin = "**🚫 Sen admin değilsin\n\n Yöneticilerle görüşebilirsin.**"
