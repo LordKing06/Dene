@@ -8,82 +8,96 @@ from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelPar
 from asyncio import sleep
 import time
 import random
-import Plugins
+import Plugins.mode.config import Maho 
 
-anlik_calisan = []
-rxyzdev_tagTot = {}
-rxyzdev_initT = {}
 
-@plugins.Maho.on(events.NewMessage(pattern="^/cancel$"))
-async def cancel_spam(event):
-    chat_id = event.chat_id
-    if chat_id in anlik_calisan:
-        anlik_calisan.remove(chat_id)
-        await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+anlik_calisan = {}
+etiketlenen_uyeler = {}
 
-@plugins.Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
+@Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
 async def mentionall(event):
-    global anlik_calisan 
-    rxyzdev_tagTot[event.chat_id] = 0
+    global anlik_calisan, etiketlenen_uyeler
     if event.is_private:
-        return await event.respond("**Bu komutu sadece grup veya kanallarda kullanabilirsiniz.**")
-  
+        return await event.respond("**Bu komut gruplar ve kanallar için geçerlidir❗️**")
+
     admins = []
-    async for admin in plugins.Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+    async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
-        return await event.respond(f"{noadmin}")
+        return await event.respond("**Bu komutu sadece yöneticiler kullanabilir〽️**")
 
     if event.pattern_match.group(1):
-        tag_text = event.pattern_match.group(1).strip()
-        tag_text = tag_text[:100]
+        mode = "text_on_cmd"
+        msg = event.pattern_match.group(1)
+    elif event.reply_to_msg_id:
+        mode = "text_on_reply"
+        msg = event.reply_to_msg_id
+        if msg == None:
+            return await event.respond("Önceki mesajları etiket işlemi için kullanamıyorum.")
     else:
-        return await event.respond("**Etiket ifadesi belirtmelisiniz.**")
+        return await event.respond("İşleme başlamak için sebep yok")
 
-    group_participants = await plugins.Maho.get_participants(event.chat_id)
-    anlik_calisan.append(event.chat_id)
-    usrnum = 0
-    usrtxt = ""
-    rxyzdev_tagTot[event.chat_id] = 0
-    await event.respond(f"**✅ Etiket işlemi başarıyla başlatıldı.\n\nEtiket ifadesi:** {tag_text}")
-    for usr in group_participants:
-        if usr.bot or usr.deleted:
-            continue
+    if mode == "text_on_cmd":
+        anlik_calisan[event.chat_id] = True
+        etiketlenen_uyeler[event.chat_id] = 0
+        usrnum = 0
+        usrtxt = ""
+        async for usr in Maho.iter_participants(event.chat_id):
+            if usr.bot or usr.deleted:
+                continue
+            usrnum += 1
+            usrtxt += f"👥 - [{usr.first_name}](tg://user?id={usr.id}) \n"
+            if event.chat_id not in anlik_calisan:
+                await event.respond("**İşlem başarıyla durduruldu**❌")
+                return
+            if usrnum == 5:
+                await Maho.send_message(event.chat_id, f"{usrtxt}\n\n{msg}")
+                etiketlenen_uyeler[event.chat_id] += usrnum
+                await asyncio.sleep(2)
+                usrnum = 0
+                usrtxt = ""
 
-        cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''        
-        username = f"@{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"[{username}](tg://user?id={usr.id}), "
+    if mode == "text_on_reply":
+        anlik_calisan[event.chat_id] = True
+        etiketlenen_uyeler[event.chat_id] = 0
+        usrnum = 0
+        usrtxt = ""
+        async for usr in Maho.iter_participants(event.chat_id):
+            if usr.bot or usr.deleted:
+                continue
+            usrnum += 1
+            usrtxt += f"👥 - [{usr.first_name}](tg://user?id={usr.id}) \n"
+            if event.chat_id not in anlik_calisan:
+                await event.respond("İşlem başarıyla durduruldu❌")
+                return
+            if usrnum == 5:
+                await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
+                etiketlenen_uyeler[event.chat_id] += usrnum
+                await asyncio.sleep(2)
+                usrnum = 0
+                usrtxt = ""
 
-        usrnum += 1
-        if usrnum == 5:
-            await plugins.Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
-            await asyncio.sleep(10)
-            usrnum = 0
-            usrtxt = ""
-        rxyzdev_tagTot[event.chat_id] += 1
-    
-    if usrnum > 0:
-        await plugins.Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
+@Maho.on(events.NewMessage(pattern='^(?i)/cancel'))
+async def cancel(event):
+    global anlik_calisan, etiketlenen_uyeler
+    chat_id = event.chat_id
+    if chat_id in anlik_calisan:
+        await event.respond(f"İşlem başarıyla durduruldu❌\n\nEtiketlenen Gerçek Üye Sayısı: {etiketlenen_uyeler[chat_id]}")
+        del anlik_calisan[chat_id]
+        del etiketlenen_uyeler[chat_id]
 
-    sender = await event.get_sender()
-    rxyzdev_initT[event.chat_id] = f"[{sender.first_name}](tg://user?id={sender.id})"
-    if event.chat_id in rxyzdev_tagTot:
-        member_count = await plugins.Maho.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
-        tag_count = rxyzdev_tagTot[event.chat_id]
-        bot_count = await plugins.Maho.get_participants(event.chat_id, filter=ChannelParticipantsBots())
-        total_count = len(member_count)
-        
-async def show_output(chat_id):
-    member_count = await plugins.Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
-    tag_count = rxyzdev_tagTot[chat_id]
-    total_count = len(member_count)
-  
-    output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
-    await plugins.Maho.send_message(chat_id, output)
+@Maho.on(events.NewMessage(pattern='^/stats'))
+async def stats(event):
+    global etiketlenen_uyeler
+    chat_id = event.chat_id
+    if chat_id in etiketlenen_uyeler:
+        genel_uye_sayisi = 0
+        async for _ in Maho.iter_participants(chat_id):
+            genel_uye_sayisi += 1
+        etiketlenen_gercek_uye_sayisi = etiketlenen_uyeler[chat_id]
+        await event.respond(f"Genel Üye Sayısı: {genel_uye_sayisi}\nEtiketlenen Gerçek Üye Sayısı: {etiketlenen_gercek_uye_sayisi}")
 
-async def delete_output(chat_id):
-    messages = await plugins.Maho.get_messages(chat_id)
-    for msg in messages:
-        await msg.delete()
-
-
+@Maho.on(events.NewMessage(pattern='^/clearoutput'))
+async def clear_output(event):
+    await asyncio.sleep(15)
+    await event.delete()
