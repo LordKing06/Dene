@@ -17,6 +17,17 @@ async def cancel_spam(event):
     await asyncio.sleep(15)  # 15 saniye bekleme süresi
     await delete_output(chat_id)
 
+@Maho.on(events.NewMessage(pattern="^/cancel$"))
+async def cancel_spam(event):
+    chat_id = event.chat_id
+    if chat_id not in anlik_calisan:
+        return
+    anlik_calisan.pop(chat_id, None)
+    await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+    await show_output(chat_id)
+    await asyncio.sleep(15)  # 15 saniye bekleme süresi
+    await delete_output(chat_id)
+
 @Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
 async def mentionall(event):
     chat_id = event.chat_id
@@ -49,7 +60,7 @@ async def mentionall(event):
         usrnum = 0
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
-        await event.respond("**✅ Etiket işlemi başarıyla başlatıldı.**\n"**Etiketleme işlemi için kullanılan ifade:** {msg}")
+        await event.respond(f"**✅ Etiket işlemi başarıyla başlatıldı.**\n**Etiketleme işlemi için kullanılan ifade:** {msg}")
 
         for usr in group_participants:
             if usr.deleted or usr.bot:
@@ -129,4 +140,3 @@ async def delete_output(chat_id):
             await msg.delete()
         except Exception as e:
             print(f"Hata: {e}")
-
