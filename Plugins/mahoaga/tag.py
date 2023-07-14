@@ -21,7 +21,7 @@ async def mentionall(event):
     async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
-        return await event.respond("**Bu komutu sadece yöneticiler kullanabilir〽️**")
+        return await event.respond("**Bu komutu sadece yöneticiler kullanabilir. 👮‍♂️**")
 
     if event.pattern_match.group(1):
         mode = "text_on_cmd"
@@ -32,7 +32,7 @@ async def mentionall(event):
         if msg == None:
             return await event.respond("Önceki mesajları etiket işlemi için kullanamıyorum.")
     else:
-        return await event.respond("İşleme başlamak için sebep yok")
+        return await event.respond("İşleme başlamak için ifade yazınız. 💡")
 
     if mode == "text_on_cmd":
         anlik_calisan[event.chat_id] = True
@@ -45,7 +45,7 @@ async def mentionall(event):
             usrnum += 1
             usrtxt += f"📢 - [{usr.first_name}](tg://user?id={usr.id}) \n"
             if event.chat_id not in anlik_calisan:
-                await event.respond("**İşlem başarıyla durduruldu**❌\n\nSilinmiş hesaplar ve botlara etiket atılmamıştır.")
+                await event.respond()
                 return
             if usrnum == 5:
                 await Maho.send_message(event.chat_id, f"{usrtxt}\n\n{msg}")
@@ -65,7 +65,7 @@ async def mentionall(event):
             usrnum += 1
             usrtxt += f"📢 - [{usr.first_name}](tg://user?id={usr.id}) \n"
             if event.chat_id not in anlik_calisan:
-                await event.respond("İşlem başarıyla durduruldu. ✅\n\nSilinmiş hesaplar ve botlara etiket atılmamıştır.")
+                await event.respond("İşlem başarıyla durduruldu. ✅")
                 return
             if usrnum == 5:
                 await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
