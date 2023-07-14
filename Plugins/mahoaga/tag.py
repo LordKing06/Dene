@@ -47,7 +47,7 @@ async def mention_all(event):
             if user.bot or user.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📢  [{user.first_name}](tg://user?id={user.id}) ,"
+            usrtxt += f"📣 [{user.first_name}](tg://user?id={user.id}) ,"
             if chat_id not in anlik_calisan:
                 await event.respond()
                 return
@@ -67,7 +67,7 @@ async def mention_all(event):
             if user.bot or user.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📢  [{user.first_name}](tg://user?id={user.id}) ,"
+            usrtxt += f"📣 [{user.first_name}](tg://user?id={user.id}) ,"
             if chat_id not in anlik_calisan:
                 await event.respond("İşlem başarıyla durduruldu. ✅")
                 return
