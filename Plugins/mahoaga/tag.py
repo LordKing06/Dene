@@ -1,12 +1,15 @@
+import os
+import logging
 import asyncio
-from telethon import events
+from telethon import Button, events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
-from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots
+from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
+
+
 from asyncio import sleep
+from Plugins.mode.config import Maho
 import time
-from telethon.sync import TelegramClient
-from Plugins.mode.config import Maho 
 
 anlik_calisan = {}
 etiketlenen_uyeler = {}
