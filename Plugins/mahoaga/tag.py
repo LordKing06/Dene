@@ -6,22 +6,22 @@ from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
 from asyncio import sleep
-from Plugins.mode.config import Maho
 import time
 import random
+import Plugins
 
 anlik_calisan = []
 rxyzdev_tagTot = {}
 rxyzdev_initT = {}
 
-@Maho.on(events.NewMessage(pattern="^/cancel$"))
+@plugins.Maho.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
     chat_id = event.chat_id
     if chat_id in anlik_calisan:
         anlik_calisan.remove(chat_id)
         await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
 
-@Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
+@plugins.Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
     rxyzdev_tagTot[event.chat_id] = 0
@@ -29,7 +29,7 @@ async def mentionall(event):
         return await event.respond("**Bu komutu sadece grup veya kanallarda kullanabilirsiniz.**")
   
     admins = []
-    async for admin in Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+    async for admin in plugins.Maho.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
         admins.append(admin.id)
     if event.sender_id not in admins:
         return await event.respond(f"{noadmin}")
@@ -40,7 +40,7 @@ async def mentionall(event):
     else:
         return await event.respond("**Etiket ifadesi belirtmelisiniz.**")
 
-    group_participants = await Maho.get_participants(event.chat_id)
+    group_participants = await plugins.Maho.get_participants(event.chat_id)
     anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
@@ -56,33 +56,34 @@ async def mentionall(event):
 
         usrnum += 1
         if usrnum == 5:
-            await Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
+            await plugins.Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
             await asyncio.sleep(10)
             usrnum = 0
             usrtxt = ""
         rxyzdev_tagTot[event.chat_id] += 1
     
     if usrnum > 0:
-        await Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
+        await plugins.Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
 
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+    rxyzdev_initT[event.chat_id] = f"[{sender.first_name}](tg://user?id={sender.id})"
     if event.chat_id in rxyzdev_tagTot:
-        member_count = await Maho.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
+        member_count = await plugins.Maho.get_participants(event.chat_id, filter=ChannelParticipantsRecent())
         tag_count = rxyzdev_tagTot[event.chat_id]
-        bot_count = await Maho.get_participants(event.chat_id, filter=ChannelParticipantsBots())
+        bot_count = await plugins.Maho.get_participants(event.chat_id, filter=ChannelParticipantsBots())
         total_count = len(member_count)
         
 async def show_output(chat_id):
-    member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
+    member_count = await plugins.Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
     tag_count = rxyzdev_tagTot[chat_id]
     total_count = len(member_count)
   
     output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
-    await Maho.send_message(chat_id, output)
+    await plugins.Maho.send_message(chat_id, output)
 
 async def delete_output(chat_id):
-    messages = await Maho.get_messages(chat_id)
+    messages = await plugins.Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
 
