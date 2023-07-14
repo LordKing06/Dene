@@ -53,7 +53,7 @@ async def mentionall(event):
         await event.respond("**✅ Etiket işlemi başarıyla başlatıldı.**")
         await event.respond(f"**Etiketleme işlemi için kullanılan ifade:** {msg}")
 
-        for usr in group_participants:
+        async for usr in group_participants:
             if usr.deleted or usr.bot:
                 continue
 
@@ -90,7 +90,7 @@ async def mentionall(event):
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
 
-        for usr in group_participants:
+        async for usr in group_participants:
             usrnum += 1
             usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
 
@@ -126,7 +126,12 @@ async def show_output(chat_id):
     await Maho.send_message(chat_id, output)
 
 async def delete_output(chat_id):
-    async for msg in Maho.iter_messages(chat_id):
-        await msg.delete()
+    try:
+        async for msg in Maho.iter_messages(chat_id):
+            await msg.delete()
+    except Exception as e:
+        print(f"Hata: {e}")
+
+
 
 
