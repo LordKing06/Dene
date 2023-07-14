@@ -1,7 +1,7 @@
 import os
 import logging
 import asyncio
-from telethon import Button, events
+from telethon import events
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelParticipantsBots 
@@ -15,17 +15,19 @@ rxyzdev_tagTot = {}
 rxyzdev_initT = {}
 
 # Komutlar
-@Maho.on(events.NewMessage(pattern="^/cancel$"))
+@Maho.on(events.MessageEdited(pattern=r'^/cancel$', incoming=True))
 async def cancel_spam(event):
-    if event.chat_id not in anlik_calisan:
+    if event.is_private:
         return
-    else:
-        try:
-            anlik_calisan.remove(event.chat_id)
-        except:
-            pass
-        return await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
- 
+    chat_id = event.chat_id
+    if chat_id not in anlik_calisan:
+        return
+    try:
+        anlik_calisan.remove(chat_id)
+    except ValueError:
+        pass
+    await event.respond('**✅ Etiket işlemi başarıyla durduruldu.**')
+
 @Maho.on(events.NewMessage(pattern="^/tag ?(.*)"))
 async def mentionall(event):
     global anlik_calisan 
@@ -98,5 +100,6 @@ async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
 
 
