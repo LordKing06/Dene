@@ -8,7 +8,7 @@ from telethon.tl.types import PeerChannel, ChannelParticipantsRecent, ChannelPar
 from asyncio import sleep
 import time
 import random
-import Plugins.mode.config import Maho 
+from Plugins.mode.config import Maho 
 
 
 anlik_calisan = {}
