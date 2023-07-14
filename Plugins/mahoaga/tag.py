@@ -68,7 +68,7 @@ async def mentionall(event):
             usrnum += 1
             usrtxt += f"👥 - [{usr.first_name}](tg://user?id={usr.id}) \n"
             if event.chat_id not in anlik_calisan:
-                await event.respond("İşlem başarıyla durduruldu❌")
+                await event.respond("İşlem başarıyla durduruldu. ✅")
                 return
             if usrnum == 5:
                 await Maho.send_message(event.chat_id, usrtxt, reply_to=msg)
@@ -82,7 +82,7 @@ async def cancel(event):
     global anlik_calisan, etiketlenen_uyeler
     chat_id = event.chat_id
     if chat_id in anlik_calisan:
-        await event.respond(f"İşlem başarıyla durduruldu❌\n\nEtiketlenen Gerçek Üye Sayısı: {etiketlenen_uyeler[chat_id]}")
+        await event.respond(f"Etiketlenen Gerçek Üye Sayısı: {etiketlenen_uyeler[chat_id]}")
         del anlik_calisan[chat_id]
         del etiketlenen_uyeler[chat_id]
 
