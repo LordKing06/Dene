@@ -9,9 +9,11 @@ from asyncio import sleep
 from Plugins.mode.config import Maho
 import time
 import random
+
 anlik_calisan = []
 rxyzdev_tagTot = {}
 rxyzdev_initT = {}
+
 # Komutlar
 @Maho.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
@@ -55,7 +57,7 @@ async def mentionall(event):
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''        
         username = f"🔘 @{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
+        usrtxt += f"⌯ {event.pattern_match.group(1)} [{username}](tg://user?id={usr.id})\n"
 
         if event.chat_id not in anlik_calisan:
             return
@@ -78,6 +80,7 @@ async def mentionall(event):
         await sleep(20)  # 20 saniye bekleme süresi
         await Maho.send_message(event.chat_id, "🔒 Etiket çıktısı süresi sona erdi. Etiket işlemi tamamlandı.")
         await show_output(event.chat_id)
+        
 async def show_output(chat_id):
     member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsRecent())
     tag_count = rxyzdev_tagTot[chat_id]
@@ -85,7 +88,9 @@ async def show_output(chat_id):
   
     output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara Etiket atılmadı."
     await Maho.send_message(chat_id, output)
+
 async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
