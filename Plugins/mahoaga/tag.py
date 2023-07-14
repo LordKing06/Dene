@@ -42,31 +42,40 @@ async def mentionall(event):
         admins.append(admin.id)
     if event.sender_id not in admins:
         return await event.respond(f"{noadmin}")
+
+    if event.pattern_match.group(1):
+        tag_text = event.pattern_match.group(1).strip()
+        tag_text = tag_text[:100]  # İfadeyi 100 karakterle sınırla
+    else:
+        return await event.respond("**Etiket ifadesi belirtmelisiniz.**")
+
     group_participants = await Maho.get_participants(event.chat_id)
     anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
     rxyzdev_tagTot[event.chat_id] = 0
-    await event.respond('**✅ Etiket işlemi başarıyla başlatıldı.**')
+    await event.respond(f"**✅ Etiket işlemi başarıyla başlatıldı.\n\nEtiket ifadesi:** {tag_text}")
     for usr in group_participants:
         if usr.bot:
             continue
         if usr.deleted:
             continue
 
-        usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''        
         username = f"🔘 @{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"⌯ {event.pattern_match.group(1)} [{username}](tg://user?id={usr.id})\n"
+        usrtxt += f"[{username}](tg://user?id={usr.id}), "
 
-        if event.chat_id not in anlik_calisan:
-            return
+        usrnum += 1
         if usrnum == 5:
-            await Maho.send_message(event.chat_id, usrtxt)
+            await Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
             await asyncio.sleep(10)
             usrnum = 0
             usrtxt = ""
         rxyzdev_tagTot[event.chat_id] += 1
+    
+    if usrnum > 0:
+        await Maho.send_message(event.chat_id, f"{tag_text} {usrtxt[:-2]}")
+
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
     if event.chat_id in rxyzdev_tagTot:
@@ -93,4 +102,5 @@ async def delete_output(chat_id):
     messages = await Maho.get_messages(chat_id)
     for msg in messages:
         await msg.delete()
+
 
