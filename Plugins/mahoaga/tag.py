@@ -1,7 +1,6 @@
 import asyncio
 from telethon import Button, events
-from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantsRecent
-from asyncio import sleep
+from telethon.tl.types import ChannelParticipantsAdmins
 from Plugins.mode.config import Maho
 
 anlik_calisan = {}
@@ -43,17 +42,16 @@ async def mentionall(event):
     else:
         return await event.respond("**Geçerli bir mesaj belirtmelisiniz. /tag Merhaba**")
 
-    group_participants = await Maho.get_participants(chat_id, aggressive=True)
+    group_participants = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins)
 
     if mode == "text_on_cmd":
         anlik_calisan[chat_id] = True
         usrnum = 0
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
-        await event.respond("**✅ Etiket işlemi başarıyla başlatıldı.**")
-        await event.respond(f"**Etiketleme işlemi için kullanılan ifade:** {msg}")
+        await event.respond("**✅ Etiket işlemi başarıyla başlatıldı.**\n"**Etiketleme işlemi için kullanılan ifade:** {msg}")
 
-        async for usr in group_participants:
+        for usr in group_participants:
             if usr.deleted or usr.bot:
                 continue
 
@@ -75,7 +73,7 @@ async def mentionall(event):
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
         if chat_id in rxyzdev_tagTot:
-            member_count = await Maho.get_participants(chat_id, aggressive=True)
+            member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins)
             tag_count = rxyzdev_tagTot[chat_id]
 
             output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
@@ -90,7 +88,7 @@ async def mentionall(event):
         usrtxt = ""
         rxyzdev_tagTot[chat_id] = 0
 
-        async for usr in group_participants:
+        for usr in group_participants:
             usrnum += 1
             usrtxt += f"⌯ [{usr.first_name}](tg://user?id={usr.id})\n"
 
@@ -109,7 +107,7 @@ async def mentionall(event):
         rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
 
         if chat_id in rxyzdev_tagTot:
-            member_count = await Maho.get_participants(chat_id, aggressive=True)
+            member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins)
             tag_count = rxyzdev_tagTot[chat_id]
 
             output = f"✅ Etiket işlemi başarıyla durduruldu.\n\n👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
@@ -119,7 +117,7 @@ async def mentionall(event):
             await show_output(chat_id)
 
 async def show_output(chat_id):
-    member_count = await Maho.get_participants(chat_id, aggressive=True)
+    member_count = await Maho.get_participants(chat_id, filter=ChannelParticipantsAdmins)
     tag_count = rxyzdev_tagTot[chat_id]
 
     output = f"👥 Genel üye sayısı: {len(member_count)}\n📢 Etiketlenen toplam üye sayısı: {tag_count}\n⛔ Silinen hesaplar ve botlara etiket atılmadı."
@@ -131,11 +129,4 @@ async def delete_output(chat_id):
             await msg.delete()
         except Exception as e:
             print(f"Hata: {e}")
-
-
-
-
-
-
-
 
