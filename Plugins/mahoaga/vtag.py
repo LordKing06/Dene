@@ -52,8 +52,8 @@ async def mentionall(event):
 
         usrnum += 1
         cleaned_name = ''.join(char for char in usr.first_name if char.lower() != ' ') if usr.first_name else ''        
-        username = f"🔘 @{usr.username}" if usr.username else cleaned_name
-        usrtxt += f"↪ {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
+        username = f"» @{usr.username}" if usr.username else cleaned_name
+        usrtxt += f"⤹ {random.choice(soru)} {event.pattern_match.group(1)[:-1]} [{username}](tg://user?id={usr.id})\n"
 
         if event.chat_id not in anlik_calisan:
             return
