@@ -64,7 +64,7 @@ async def mentionall(event):
                 await event.respond()
                 return
             if usrnum == 5:
-                await Maho.send_message(chat_id, f"💡 {usrtxt}\n\n{msg}")
+                await Maho.send_message(chat_id, f"🔘 {usrtxt}\n\n💡 - {msg}")
                 etiketlenen_uyeler[chat_id] += usrnum
                 await asyncio.sleep(10)
                 usrnum = 0
