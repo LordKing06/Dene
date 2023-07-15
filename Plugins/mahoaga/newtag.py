@@ -100,7 +100,7 @@ async def mentionall(event):
         genel_uye_sayisi = 0
         async for _ in Maho.iter_participants(chat_id):
             genel_uye_sayisi += 1
-        await event.respond(f"Etiketlenen Üye Sayısı: {etiketlenen_uyeler[chat_id]}\nGenel Üye Sayısı: {genel_uye_sayisi}")
+        await event.respond(f"Etiketlenen Üye Sayısı: {etiketlenen_uyeler[chat_id]}\nGenel Üye Sayısı: {genel_uye_sayisi}\nSilinmiş hesaplar ve botlara etiket atılmamıştır.")
 
     # 5 saniye sonra mesajı sil
     await asyncio.sleep(5)
