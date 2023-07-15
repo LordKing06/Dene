@@ -59,12 +59,12 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📣  [{usr.first_name}](tg://user?id={usr.id}) ,"
+            usrtxt += f" [{usr.first_name}](tg://user?id={usr.id}) ,"
             if chat_id not in anlik_calisan:
                 await event.respond()
                 return
             if usrnum == 5:
-                await Maho.send_message(chat_id, f"{usrtxt}\n\n{msg}")
+                await Maho.send_message(chat_id, f"💡 {usrtxt}\n\n{msg}")
                 etiketlenen_uyeler[chat_id] += usrnum
                 await asyncio.sleep(10)
                 usrnum = 0
@@ -79,7 +79,7 @@ async def mentionall(event):
             if usr.bot or usr.deleted:
                 continue
             usrnum += 1
-            usrtxt += f"📣  [{usr.first_name}](tg://user?id={usr.id}) ,"
+            usrtxt += f" [{usr.first_name}](tg://user?id={usr.id}) ,"
             if chat_id not in anlik_calisan:
                 await event.respond("İşlem başarıyla durduruldu. ✅")
                 return
@@ -106,7 +106,7 @@ async def cancel(event):
         # Otomatik etiketleme durduğunda çıktı mesajı gönder
         await Maho.send_message(chat_id, "Otomatik etiketleme işlemi durduruldu. ✅")
 
-@Maho.on(events.NewMessage(pattern='^/stats'))
+@Maho.on(events.NewMessage(pattern='^/info'))
 async def stats(event):
     global etiketlenen_uyeler
     chat_id = event.chat_id
@@ -120,5 +120,5 @@ async def stats(event):
 
 @Maho.on(events.NewMessage(pattern='^/clearoutput'))
 async def clear_output(event):
-    await asyncio.sleep(15)
+    await asyncio.sleep(10)
     await event.delete()
