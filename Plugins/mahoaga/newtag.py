@@ -69,6 +69,12 @@ async def mentionall(event):
                 await asyncio.sleep(10)
                 usrnum = 0
                 usrtxt = ""
+        
+        # Etiketleme işlemi bittiğinde toplam etiketlenen üye sayısını belirt
+        genel_uye_sayisi = 0
+        async for _ in Maho.iter_participants(chat_id):
+            genel_uye_sayisi += 1
+        await event.respond(f"Etiketlenen Üye Sayısı: {etiketlenen_uyeler[chat_id]}\nGenel Üye Sayısı: {genel_uye_sayisi}")
 
     if mode == "text_on_reply":
         anlik_calisan[chat_id] = True
@@ -89,6 +95,16 @@ async def mentionall(event):
                 await asyncio.sleep(10)
                 usrnum = 0
                 usrtxt = ""
+        
+        # Etiketleme işlemi bittiğinde toplam etiketlenen üye sayısını belirt
+        genel_uye_sayisi = 0
+        async for _ in Maho.iter_participants(chat_id):
+            genel_uye_sayisi += 1
+        await event.respond(f"Etiketlenen Üye Sayısı: {etiketlenen_uyeler[chat_id]}\nGenel Üye Sayısı: {genel_uye_sayisi}")
+
+    # 5 saniye sonra mesajı sil
+    await asyncio.sleep(5)
+    await event.delete()
 
 @Maho.on(events.NewMessage(pattern='^(?i)/cancel'))
 async def cancel(event):
@@ -114,11 +130,5 @@ async def stats(event):
     if chat_id in etiketlenen_uyeler:
         genel_uye_sayisi = 0
         async for _ in Maho.iter_participants(chat_id):
-            genel_uye_sayisi += 1
-        etiketlenen_gercek_uye_sayisi = etiketlenen_uyeler[chat_id]
-        await event.respond(f"Genel Üye Sayısı: {genel_uye_sayisi}\nEtiketlenen Gerçek Üye Sayısı: {etiketlenen_gercek_uye_sayisi}")
+            genel_uye
 
-@Maho.on(events.NewMessage(pattern='^/clearoutput'))
-async def clear_output(event):
-    await asyncio.sleep(10)
-    await event.delete()
